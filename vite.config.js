@@ -10,4 +10,11 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        // ... other server settings
+        cors: {
+            origin: 'http://127.0.0.1:8000', // Allow traffic from your main server
+            // If your server needs more complex cors settings, you can set it here.
+        }
+    }
 });

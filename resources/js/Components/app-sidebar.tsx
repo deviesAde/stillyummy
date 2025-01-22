@@ -1,208 +1,220 @@
-import * as React from "react"
-import { GalleryVerticalEnd } from "lucide-react"
-
+import * as React from "react";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarRail,
-} from "@/Components/ui/sidebar"
+    Wallet2,
+    Bot,
+    Frame,
+    Map,
+    PieChart,
+    Settings2,
+    SquareTerminal,
+    User2,
+    Store,
+} from "lucide-react";
+
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarRail,
+} from "@/components/ui/sidebar";
+
+import { faker, ro } from "@faker-js/faker";
+import { usePage } from "@inertiajs/react";
 
 // This is sample data.
 const data = {
-  navMain: [
-    {
-      title: "Getting Started",
-      url: "#",
-      items: [
-        {
-          title: "Installation",
-          url: "#",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-        },
-      ],
+    user: {
+        name: "shadcn",
+        email: "m@example.com",
+        avatar: "/avatars/shadcn.jpg",
     },
-    {
-      title: "Building Your Application",
-      url: "#",
-      items: [
-        {
-          title: "Routing",
-          url: "#",
+    nav: {
+        Dashboard: {
+            name: "Dasboard",
+            url: route("dashboard"),
+            icon: SquareTerminal,
+            isActive: true,
+            items: [
+                {
+                    title: "History",
+                    url: "#",
+                },
+                {
+                    title: "Starred",
+                    url: "#",
+                },
+                {
+                    title: "Settings",
+                    url: "#",
+                },
+            ],
         },
-        {
-          title: "Data Fetching",
-          url: "#",
-          isActive: true,
+        Wallet: {
+            name: "Dompetku",
+            url: "#",
+            icon: Wallet2,
+            isActive: true,
+            items: [
+                {
+                    title: "History",
+                    url: "#",
+                },
+                {
+                    title: "Starred",
+                    url: "#",
+                },
+                {
+                    title: "Settings",
+                    url: "#",
+                },
+            ],
         },
-        {
-          title: "Rendering",
-          url: "#",
+        Cart: {
+            title: "Models",
+            url: "#",
+            icon: Bot,
+            items: [
+                {
+                    title: "Genesis",
+                    url: "#",
+                },
+                {
+                    title: "Explorer",
+                    url: "#",
+                },
+                {
+                    title: "Quantum",
+                    url: "#",
+                },
+            ],
         },
-        {
-          title: "Caching",
-          url: "#",
+        Merchant_Setting: {
+            title: "Merchant",
+            url: "#",
+            icon: Store,
+            items: [
+                {
+                    title: "Menunggu Pembayaran",
+                    url: "#",
+                },
+                {
+                    title: "Sedang Berlangsung",
+                    url: "#",
+                },
+                {
+                    title: "Dalam Pengiriman",
+                    url: "#",
+                },
+                {
+                    title: "Riwayat Transaksi",
+                    url: "#",
+                },
+            ],
         },
-        {
-          title: "Styling",
-          url: "#",
+        Transaction: {
+            title: "Transaksi",
+            url: "#",
+            icon: Settings2,
+            items: [
+                {
+                    title: "Menunggu Pembayaran",
+                    url: "#",
+                },
+                {
+                    title: "Sedang Berlangsung",
+                    url: "#",
+                },
+                {
+                    title: "Dalam Pengiriman",
+                    url: "#",
+                },
+                {
+                    title: "Riwayat Transaksi",
+                    url: "#",
+                },
+            ],
         },
-        {
-          title: "Optimizing",
-          url: "#",
+        Profile: {
+            title: "Profile",
+            url: "#",
+            icon: User2,
+            items: [
+                {
+                    title: "Profile Information",
+                    url: route("profile.index"),
+                },
+                {
+                    title: "Profile Setting",
+                    url: route("profilesetting"),
+                },
+            ],
         },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
-      ],
     },
-    {
-      title: "API Reference",
-      url: "#",
-      items: [
+
+    projects: [
         {
-          title: "Components",
-          url: "#",
+            name: "Design Engineering",
+            url: "#",
+            icon: Frame,
         },
         {
-          title: "File Conventions",
-          url: "#",
+            name: "Sales & Marketing",
+            url: "#",
+            icon: PieChart,
         },
         {
-          title: "Functions",
-          url: "#",
+            name: "Travel",
+            url: "#",
+            icon: Map,
         },
-        {
-          title: "next.config.js Options",
-          url: "#",
-        },
-        {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Community",
-      url: "#",
-      items: [
-        {
-          title: "Contribution Guide",
-          url: "#",
-        },
-      ],
-    },
-  ],
-}
+    ],
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  return (
-    <Sidebar {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <GalleryVerticalEnd className="size-4" />
+    const { name, email, role } = usePage().props.auth.user;
+    return (
+        <Sidebar className="" collapsible="icon" {...props}>
+            <SidebarHeader>
+                <div className="flex items-center justify-between mr-2">
+                    <img
+                        className="max-h-10 rounded-full"
+                        src={faker.image.avatar()}
+                        alt=""
+                    />
+                    <div>
+                        <h1 className="font-semibold">StillYummy</h1>
+                        <h1 className="text-xs">
+                            Modern Solution For Food Waste
+                        </h1>
+                    </div>
                 </div>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Documentation</span>
-                  <span className="">v1.0.0</span>
+            </SidebarHeader>
+            <SidebarContent className="flex flex-col">
+                <NavProjects projects={[data.nav.Dashboard]} />
+                <NavMain items={[data.nav.Transaction]} />
+                <NavProjects projects={[data.nav.Wallet]} />
+                {role === "Merchant" && (
+                    <NavMain items={[data.nav.Merchant_Setting]} />
+                )}
+                <NavMain items={[data.nav.Profile]} />
+            </SidebarContent>
+            <SidebarFooter className="mb-2">
+                <div className="flex items-center space-x-4 justify-starts mr-2">
+                    <img
+                        className="max-h-10 rounded-full"
+                        src={faker.image.avatar()}
+                        alt=""
+                    />
+                    <div>
+                        <h1 className="font-semibold">{name}</h1>
+                        <h1 className="text-xs">{email}</h1>
+                    </div>
                 </div>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu>
-            {data.navMain.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
-                    {item.title}
-                  </a>
-                </SidebarMenuButton>
-                {item.items?.length ? (
-                  <SidebarMenuSub>
-                    {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                ) : null}
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarRail />
-    </Sidebar>
-  )
+            </SidebarFooter>
+            <SidebarRail />
+        </Sidebar>
+    );
 }

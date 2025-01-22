@@ -14,6 +14,11 @@ import {
     SidebarTrigger,
 } from "@/Components/ui/sidebar";
 
+interface session {
+    id:number,
+    name:string,
+}
+
 export default function Page() {
     return (
         <SidebarProvider>
