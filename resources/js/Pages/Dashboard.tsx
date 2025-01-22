@@ -15,6 +15,11 @@ import {
 } from "@/Components/ui/sidebar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
+interface session {
+    id:number,
+    name:string,
+}
+
 export default function Page() {
     return (
         <AuthenticatedLayout>
