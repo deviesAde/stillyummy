@@ -6,9 +6,10 @@ import {
     Map,
     PieChart,
     Settings2,
-    SquareTerminal,
     User2,
     Store,
+    LayoutDashboard,
+    PackageCheckIcon
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -35,7 +36,7 @@ const data = {
         Dashboard: {
             name: "Dasboard",
             url: route("dashboard"),
-            icon: SquareTerminal,
+            icon: LayoutDashboard,
             isActive: true,
             items: [
                 {
@@ -117,7 +118,7 @@ const data = {
         Transaction: {
             title: "Transaksi",
             url: "#",
-            icon: Settings2,
+            icon: PackageCheckIcon,
             items: [
                 {
                     title: "Menunggu Pembayaran",

@@ -1,6 +1,13 @@
 import { Card,CardFooter,CardContent,CardDescription,CardHeader,CardTitle } from "../ui/card";
 import { Edit,BadgeCheck } from "lucide-react";
-export default function Address_card({ Data, onClick }) {
+
+interface DataType {
+    Name:string;
+    Phone:number;
+    Address:string;
+}
+
+export default function Address_card({ Data, onClick } : {Data:DataType, onClick:() => void}) {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-between items-center">
