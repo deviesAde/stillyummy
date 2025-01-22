@@ -9,7 +9,7 @@ import {
     User2,
     Store,
     LayoutDashboard,
-    PackageCheckIcon
+    PackageCheckIcon,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -22,8 +22,11 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar";
 
-import { faker, ro } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { usePage } from "@inertiajs/react";
+import { User } from "@/types";
+import { Button } from "./ui/button";
+import { router } from "@inertiajs/react";
 
 // This is sample data.
 const data = {
@@ -175,7 +178,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const { name, email, role } = usePage().props.auth.user;
+    const UserSession: User = usePage().props.auth.user;
     return (
         <Sidebar className="" collapsible="icon" {...props}>
             <SidebarHeader>
@@ -197,25 +200,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavProjects projects={[data.nav.Dashboard]} />
                 <NavMain items={[data.nav.Transaction]} />
                 <NavProjects projects={[data.nav.Wallet]} />
-                {role === "Merchant" && (
+                {UserSession?.role === "Merchant" && (
                     <NavMain items={[data.nav.Merchant_Setting]} />
                 )}
                 <NavMain items={[data.nav.Profile]} />
             </SidebarContent>
+
             <SidebarFooter className="mb-2">
-                <div className="flex items-center space-x-4 justify-starts mr-2">
-                    <img
-                        className="max-h-10 rounded-full"
-                        src={faker.image.avatar()}
-                        alt=""
-                    />
-                    <div>
-                        <h1 className="font-semibold">{name}</h1>
-                        <h1 className="text-xs">{email}</h1>
+                {UserSession ? (
+                    <div className="flex items-center space-x-4 justify-starts mr-2">
+                        <img
+                            className="max-h-10 rounded-full"
+                            src={faker.image.avatar()}
+                            alt=""
+                        />
+                        <div>
+                            <h1 className="font-semibold">
+                                {UserSession.name}
+                            </h1>
+                            <h1 className="text-xs">{UserSession.email}</h1>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <Button
+                        className="bg-black font-bold"
+                        onClick={() => router.get(route("login"))}
+                    >
+                        Login
+                    </Button>
+                )}
             </SidebarFooter>
-            <SidebarRail />
+            {/* <SidebarRail /> */}
         </Sidebar>
     );
 }
