@@ -38,7 +38,7 @@ export default function ProductModal({
                 className="w-full min-h-screen"
                 onClick={() => onClick(false)}
             ></div>
-            <Card className="fixed w-full bottom-0 z-50 rounded-3xl drop gap-y-2">
+            <Card className="fixed w-full bottom-0 z-50 rounded-t-3xl drop gap-y-2">
                 <CardHeader>
                     <CardTitle>Stock Product</CardTitle>
                     <CardDescription className="text-black font-bold text-xl">
@@ -81,7 +81,7 @@ export default function ProductModal({
                     </div>
                 </CardContent>
                 <CardFooter className="space-x-5 border-t-2 pt-5">
-                    <ButtonFooter />
+                    <ButtonFooter className="flex w-full gap-x-5"/>
                 </CardFooter>
             </Card>
         </div>

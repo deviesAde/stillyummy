@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card,CardContent } from "../ui/card";
 import {
     Carousel,
     CarouselContent,
@@ -10,7 +10,7 @@ import { faker } from "@faker-js/faker";
 
 export default function CarouselProduct() {
     return (
-        <Carousel className="h-fit">
+        <Carousel className="h-fit flex-1">
             <CarouselContent>
                 {Array.from({ length: 5 }).map((_, index) => (
                     <CarouselItem key={index}>

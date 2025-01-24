@@ -22,7 +22,7 @@ export default function CarouselDashboard() {
                                             width: 1400,
                                         })}
                                         alt=""
-                                        className="rounded-md"
+                                        className="rounded-md w-full"
                                     />
                                 </CardContent>
                             </Card>
