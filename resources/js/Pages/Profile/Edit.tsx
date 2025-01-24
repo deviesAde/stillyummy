@@ -11,29 +11,27 @@ export default function Edit({
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
-        <AuthenticatedLayout header={{Parrent : "Profile",Submenu : "Profile Setting"}}>
+        <AuthenticatedLayout
+            header={{ Parrent: "Profile", Submenu: "Profile Setting" }}
+            className="flex flex-col gap-y-5"
+        >
             <Head title="Profile Setting" />
-            <div className="my-10 mx-auto px-5 md:mt-10 w-fit space-y-6 sm:px-6 lg:px-8">
-                <div className="flex flex-col space-y-5 md:space-y-0 md:flex-row md:space-x-6">
-                    <div className="bg-white p-4 shadow rounded-lg sm:p-8 flex-1">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
-                    <div className="bg-white p-4 shadow rounded-lg sm:p-8 flex-1">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
-                </div>
-
-                <div className="bg-white p-4 shadow rounded-lg sm:p-8">
-                    <DeleteUserForm className="max-w-xl" />
-                </div>
-                <DangerButton className="w-full" onClick={()=> router.post(route('logout'))}>
-                    <h1 className="text-center w-full">Log Out</h1>
-                </DangerButton>
+            <div className="flex flex-col space-y-5 md:space-y-0 md:flex-row md:space-x-6">
+                <UpdateProfileInformationForm
+                    mustVerifyEmail={mustVerifyEmail}
+                    status={status}
+                    className="min-w-xl bg-white p-4 shadow rounded-lg sm:p-8 flex-1"
+                />
+                <UpdatePasswordForm className="w-fit bg-white p-4 shadow rounded-lg sm:p-8 flex-1" />
             </div>
+            <DeleteUserForm className="min-w-xl bg-white p-4 shadow rounded-lg sm:p-8" />
+            <DangerButton
+                className="w-full"
+                onClick={() => router.post(route("logout"))}
+            >
+                <h1 className="text-center w-full">Log Out</h1>
+            </DangerButton>
+            {/* </div> */}
         </AuthenticatedLayout>
     );
 }

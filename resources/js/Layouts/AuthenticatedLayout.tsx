@@ -1,15 +1,18 @@
 import { Link, usePage } from "@inertiajs/react";
 import { PropsWithChildren, ReactNode, useState } from "react";
-import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
+import { Sidebar, SidebarProvider } from "@/Components/ui/sidebar";
 import { AppSidebar } from "@/Components/app-sidebar";
-import { ShoppingBasket,AlignLeft} from "lucide-react";
+import { ShoppingBasket, AlignLeft } from "lucide-react";
+import { HeaderType } from "@/types/HeaderType";
+import { cn } from "@/lib/utils";
 export default function Authenticated({
     header,
     children,
-}: PropsWithChildren<{ header?: { Parrent?: string; Submenu?: string } }>) {
+}: PropsWithChildren<{ header?: object }>) {
     const user = usePage().props.auth.user;
 
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [showingNavigationDropdown, setShowingNavigationDropdown] =
+        useState(false);
 
     return (
         <SidebarProvider>
@@ -17,20 +20,19 @@ export default function Authenticated({
                 <AppSidebar />
             </Sidebar>
             <div className="flex-1 pb-10">
-                <div className="sticky top-0 bg-white border-b-[1px] border-gray-300 py-4 px-5 md:px-10 w-full text-md sm:text-md text-gray-500 flex gap-x-3 items-center justify-between">
+                <div className="z-50 sticky top-0 bg-white border-b-[1px] border-gray-300 py-4 px-5 md:px-10 w-full text-md sm:text-md text-gray-500 flex gap-x-3 items-center justify-between">
                     <div className="flex items-center gap-x-3">
-                        <AlignLeft className="md:hidden"/>
+                        <SidebarTrigger className="md:hidden"/>
                         <h1 className="text-xs">|</h1>
-  
                         <h1 className={`hidden md:block ${ !header?.Submenu && "Text-black"}`}>
                             {header?.Parrent}
                         </h1>
-                        {header?.Submenu && <h1 className="text-x hidden md:block">{">"}</h1>}
+                        {header.Submenu && <h1 className="text-x hidden md:block">{">"}</h1>}
                         <h1 className="text-black">{header?.Submenu}</h1>
                     </div>
                     <ShoppingBasket />
                 </div>
-                <main className="">{children}</main>
+                <main className={cn("m-5 md:m-10",className)}>{children}</main>
             </div>
             {/* <div className="min-h-screen bg-gray-100 w-full">
                 <nav className="border-b border-gray-100 bg-white">

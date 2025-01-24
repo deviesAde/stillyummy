@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 export default function Biodata() {
     const { name, email, phone, role } = usePage().props.auth.user;
     return (
-        <div className=" bg-red-600 p-5 m-10">
+        <div className=" bg-red-600 p-5">
             <div className="flex">
                 <img src={faker.image.avatar()} alt="" />
                 <h1>{name}</h1>

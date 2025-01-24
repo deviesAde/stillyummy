@@ -27,7 +27,7 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
-
+            <h1 className="text-center py-5 text-xl font-extrabold">Regiter</h1>
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
