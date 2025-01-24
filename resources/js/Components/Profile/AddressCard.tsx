@@ -1,12 +1,6 @@
 import { Card,CardFooter,CardContent,CardDescription,CardHeader,CardTitle } from "../ui/card";
 import { Edit,BadgeCheck } from "lucide-react";
-
-interface DataType {
-    Name:string;
-    Phone:number;
-    Address:string;
-}
-
+import { DataType } from "@/types/AddressType";
 export default function Address_card({ Data, onClick } : {Data:DataType, onClick:() => void}) {
     return (
         <Card>

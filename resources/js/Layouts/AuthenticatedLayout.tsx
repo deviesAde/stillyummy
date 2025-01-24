@@ -4,10 +4,12 @@ import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/Components/ui/sideba
 import { AppSidebar } from "@/Components/app-sidebar";
 import { ShoppingBasket, AlignLeft } from "lucide-react";
 import { HeaderType } from "@/types/HeaderType";
+import { cn } from "@/lib/utils";
 export default function Authenticated({
     header,
     children,
-}: PropsWithChildren<{ header?: HeaderType }>) {
+    className,
+}: PropsWithChildren<{ header?: HeaderType,className?: string}>) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -35,7 +37,7 @@ export default function Authenticated({
                     </div>
                     <ShoppingBasket />
                 </div>
-                <main className="">{children}</main>
+                <main className={cn("m-5 md:m-10",className)}>{children}</main>
             </div>
             {/* <div className="min-h-screen bg-gray-100 w-full">
                 <nav className="border-b border-gray-100 bg-white">

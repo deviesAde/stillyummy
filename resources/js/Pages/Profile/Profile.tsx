@@ -10,8 +10,10 @@ export default function Edit({
     const [subPage, setSubpage] = useState(true);
 
     return (
-        <AuthenticatedLayout header={{ Parrent : "Profile", Submenu : "Profile Information" }}>
-            <div className="w-1/3 flex m-10 gap-x-5 hover:cursor-pointer">
+        <AuthenticatedLayout
+            header={{ Parrent: "Profile", Submenu: "Profile Information" }} className="flex flex-col gap-y-10"
+        >
+            <div className="w-1/3 flex gap-x-5 hover:cursor-pointer">
                 <div className="flex-1" onClick={() => setSubpage(true)}>
                     <h1 className="bg-white text-black disabled:bg-transparent pl-1">
                         Biodata

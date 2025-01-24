@@ -1,5 +1,4 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import CarouselComponent from "@/Components/Dashboard/Carousel";
 import ProductCard from "@/Components/Dashboard/ProductCard";
 import { faker } from "@faker-js/faker/locale/id_ID";
 import { ProductCardType } from "@/types/ProductCardType";
@@ -12,12 +11,15 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
 } from "@radix-ui/react-dropdown-menu";
+import { useState } from "react";
 
-const DummyProducts: ProductCardType[] = Array.from({ length: 100 }).map(
+import CarouselDashboard from "@/Components/Dashboard/Carousel";
+
+const DummyProducts: ProductCardType[] = Array.from({ length: 1000 }).map(
     (id, index) => {
         faker.seed(index);
         const DummyProduct: ProductCardType = {
-            ID: faker.number.int(),
+            ID: faker.string.ulid(),
             Thubnail: faker.image.urlPicsumPhotos({ height: 800, width: 1000 }),
             Title: faker.commerce.productName(),
             price: faker.commerce.price({
@@ -31,57 +33,66 @@ const DummyProducts: ProductCardType[] = Array.from({ length: 100 }).map(
 );
 
 export default function Page() {
-    // console.log(DummyProducts)
+    const [Dummy, SetDummy] = useState(DummyProducts);
+    const HandleSearch = (value: string): void => {
+        let Userfind: ProductCardType[] = DummyProducts;
+        if (value) {
+            Userfind = DummyProducts.filter((data) =>
+                data.Title.toLowerCase().includes(value.toLowerCase())
+            );
+        }
+        console.log(Userfind);
+        SetDummy(Userfind);
+    };
     return (
-        <Authenticated header={{ Parrent: "Dashboard" }}>
-            <div className="pt-5 flex flex-col space-y-5">
-                <div className="sticky top-14 px-10 pt-10 pb-5 flex flex-col gap-y-5 bg-white z-50">
-                    <TextInput placeholder="Search" />
-                    <div className="flex space-x-1 w-1/2 ml-auto">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">
-                                Open
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuLabel>
-                                    My Account
-                                </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Billing</DropdownMenuItem>
-                                <DropdownMenuItem>Team</DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    Subscription
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="border-[1px] rounded-md flex-1 py-0.5">
-                                Open
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuLabel>
-                                    My Account
-                                </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Billing</DropdownMenuItem>
-                                <DropdownMenuItem>Team</DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    Subscription
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
+        <Authenticated
+            header={{ Parrent: "Dashboard" }}
+            className="flex flex-col space-y-5"
+        >
+            <CarouselDashboard />
+            <div className="sticky top-14 pb-5 flex flex-col gap-y-5 bg-white z-50">
+                <TextInput
+                    placeholder="Search"
+                    onKeyDown={(e) =>
+                        e.keyCode === 13 && HandleSearch(e.target.value)
+                    }
+                />
+                <div className="flex space-x-1 w-1/2 ml-auto">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">
+                            Open
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Billing</DropdownMenuItem>
+                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="border-[1px] rounded-md flex-1 py-0.5">
+                            Open
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Billing</DropdownMenuItem>
+                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
-
-                <div className="grid grid-col-2 md:grid-cols-6 gap-7 md:gap-2 px-10">
-                    {DummyProducts.map((item) => (
-                        <ProductCard Data={item} />
-                    ))}
-                </div>
-                {/* <CarouselComponent /> */}
             </div>
+
+            <div className="grid grid-col-2 md:grid-cols-6 gap-7 md:gap-2">
+                {Dummy.map((item) => (
+                    <ProductCard Data={item} />
+                ))}
+            </div>
+            {/* <CarouselComponent /> */}
         </Authenticated>
     );
 }

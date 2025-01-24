@@ -182,7 +182,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar className="" collapsible="icon" {...props}>
             <SidebarHeader>
-                <div className="flex items-center justify-between mr-2">
+                <div className="flex items-center space-x-4 mr-2">
                     <img
                         className="max-h-10 rounded-full"
                         src={faker.image.avatar()}
@@ -196,11 +196,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </div>
                 </div>
             </SidebarHeader>
-            <SidebarContent className="flex flex-col">
+            <SidebarContent className="flex flex-col py-5">
                 <NavProjects projects={[data.nav.Dashboard]} />
                 <NavMain items={[data.nav.Transaction]} />
                 <NavProjects projects={[data.nav.Wallet]} />
-                {UserSession?.role === "Merchant" && (
+                {UserSession?.role=== "Merchant" && (
                     <NavMain items={[data.nav.Merchant_Setting]} />
                 )}
                 <NavMain items={[data.nav.Profile]} />

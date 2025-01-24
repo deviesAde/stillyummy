@@ -33,7 +33,7 @@ export default function Address() {
         SetAddress(UpdateDefault);
     };
     return (
-        <div className="mx-10 space-y-10 flex flex-col">
+        <div className="space-y-10 flex flex-col">
             <Banner_card Data={AddressState.find((data) => data.default)!} />
             <div className="flex justify-end">
                 <Button className="w-fit px-8">

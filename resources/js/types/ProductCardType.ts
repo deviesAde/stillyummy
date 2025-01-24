@@ -1,6 +1,11 @@
 export interface ProductCardType{
-    ID: number;
-    Thubnail : string;
+    ID: string;
+    Thubnail : string | string[];
     Title : string;
     price : string;
+    Description? : string;
+    Category? : string;
+    Seller? : string;
+    SellerPorfile? : string; 
+    SellerDescription? : string;
 }

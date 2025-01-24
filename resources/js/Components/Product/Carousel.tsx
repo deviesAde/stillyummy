@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { faker } from "@faker-js/faker";
 
-export default function CarouselDashboard() {
+export default function CarouselProduct() {
     return (
         <Carousel className="h-fit">
             <CarouselContent>
@@ -18,8 +18,8 @@ export default function CarouselDashboard() {
                                 <CardContent className="h-fit p-5">
                                     <img
                                         src={faker.image.url({
-                                            height: 200,
-                                            width: 1400,
+                                            height: 1080,
+                                            width: 1920,
                                         })}
                                         alt=""
                                         className="rounded-md"
@@ -29,8 +29,8 @@ export default function CarouselDashboard() {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="ml-20 z-30" />
-            <CarouselNext className="mr-20 z-3-" />
+            <CarouselPrevious className="hidden md:flex ml-20 z-50" />
+            <CarouselNext className="hidden md:flex mr-20 z-50" />
         </Carousel>
     );
 }

@@ -21,13 +21,17 @@ Route::get('/', function (Request $request) {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+Route::get('/Product/{id}', [ProductController::class, 'GetProduct']);
+
+Route::get('/error', function () {
+    return redirect()->back()->with('error', 'test');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profilesetting', [ProfileController::class, 'edit'])->name('profilesetting');
-    Route::get('/profile',[ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/Product/{id}', [ProductController::class, 'index']);
-    
 });
 
 require __DIR__ . '/auth.php';
