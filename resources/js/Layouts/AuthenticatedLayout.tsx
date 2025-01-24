@@ -1,12 +1,12 @@
 import { Link, usePage } from "@inertiajs/react";
 import { PropsWithChildren, ReactNode, useState } from "react";
-import { Sidebar, SidebarProvider } from "@/Components/ui/sidebar";
+import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/Components/app-sidebar";
 import { ShoppingBasket,AlignLeft} from "lucide-react";
 export default function Authenticated({
     header,
     children,
-}: PropsWithChildren<{ header?: object }>) {
+}: PropsWithChildren<{ header?: { Parrent?: string; Submenu?: string } }>) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -21,10 +21,11 @@ export default function Authenticated({
                     <div className="flex items-center gap-x-3">
                         <AlignLeft className="md:hidden"/>
                         <h1 className="text-xs">|</h1>
+  
                         <h1 className={`hidden md:block ${ !header?.Submenu && "Text-black"}`}>
                             {header?.Parrent}
                         </h1>
-                        {header.Submenu && <h1 className="text-x hidden md:block">{">"}</h1>}
+                        {header?.Submenu && <h1 className="text-x hidden md:block">{">"}</h1>}
                         <h1 className="text-black">{header?.Submenu}</h1>
                     </div>
                     <ShoppingBasket />
