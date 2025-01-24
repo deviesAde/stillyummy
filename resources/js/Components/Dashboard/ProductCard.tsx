@@ -9,7 +9,7 @@ export default function ProductCard({ Data }: { Data: ProductCardType }) {
             <CardHeader className="p-0 pb-5">
                 <img className="rounded-t-md object-fill" src={Data.Thubnail} alt="" />
                 <CardTitle className="text-md md:text-sm font-normal mx-2">{Data.Title}</CardTitle>
-                <CardDescription className="font-extrabold text-black mx-2">{Data.price}</CardDescription>
+                <CardDescription className="font-extrabold text-black mx-2">Rp{Data.price.toLocaleString("ID")}</CardDescription>
             </CardHeader>
         </Card>
     );
