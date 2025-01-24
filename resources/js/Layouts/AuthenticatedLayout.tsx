@@ -1,6 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import { PropsWithChildren, ReactNode, useState } from "react";
-import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/Components/ui/sidebar";
+import { Sidebar, SidebarProvider } from "@/Components/ui/sidebar";
 import { AppSidebar } from "@/Components/app-sidebar";
 import { ShoppingBasket, AlignLeft } from "lucide-react";
 import { HeaderType } from "@/types/HeaderType";
@@ -8,8 +8,7 @@ import { cn } from "@/lib/utils";
 export default function Authenticated({
     header,
     children,
-    className,
-}: PropsWithChildren<{ header?: HeaderType,className?: string}>) {
+}: PropsWithChildren<{ header?: object }>) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -25,14 +24,10 @@ export default function Authenticated({
                     <div className="flex items-center gap-x-3">
                         <SidebarTrigger className="md:hidden"/>
                         <h1 className="text-xs">|</h1>
-                        <h1
-                            className= {header?.Submenu ? "hidden md:block" : "text-black"}
-                        >
+                        <h1 className={`hidden md:block ${ !header?.Submenu && "Text-black"}`}>
                             {header?.Parrent}
                         </h1>
-                        {header?.Submenu && (
-                            <h1 className="text-x hidden md:block">{">"}</h1>
-                        )}
+                        {header.Submenu && <h1 className="text-x hidden md:block">{">"}</h1>}
                         <h1 className="text-black">{header?.Submenu}</h1>
                     </div>
                     <ShoppingBasket />
