@@ -1,8 +1,9 @@
 
 import { Card,CardHeader,CardTitle,CardContent,CardDescription,CardFooter } from "../ui/card";
 import { Edit } from "lucide-react";
+import { DataType } from "@/types/AddressType";
 
-export default function Banner_card({ Data }) {
+export default function Banner_card({ Data }: {Data:DataType}) {
     console.log(Data);
     return (
         <Card>

@@ -31,7 +31,10 @@ export default function Login({
     return (
         <GuestLayout>
             <Head title="Log in" />
-
+            <div className="flex flex-col gap-y-2 pb-5">
+                <h1 className="text-center font-bold text-xl pt-5">Login</h1>
+                <h1 className="text-center">Belum Punya Akun? <span><Link href={route("register")} className="text-gray-800 font-extrabold">Register</Link></span></h1>
+            </div>
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
                     {status}

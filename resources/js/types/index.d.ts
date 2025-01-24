@@ -4,6 +4,7 @@ export interface User {
     role:string;
     email: string;
     email_verified_at?: string;
+    phone:string;
 }
 
 export type PageProps<

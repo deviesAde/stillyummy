@@ -1,65 +1,98 @@
-import { AppSidebar } from "@/Components/app-sidebar";
+import Authenticated from "@/Layouts/AuthenticatedLayout";
+import ProductCard from "@/Components/Dashboard/ProductCard";
+import { faker } from "@faker-js/faker/locale/id_ID";
+import { ProductCardType } from "@/types/ProductCardType";
+import TextInput from "@/Components/TextInput";
 import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/Components/ui/breadcrumb";
-import { Separator } from "@/Components/ui/separator";
-import {
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
-} from "@/Components/ui/sidebar";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+} from "@radix-ui/react-dropdown-menu";
+import { useState } from "react";
 
-interface session {
-    id:number,
-    name:string,
-}
+import CarouselDashboard from "@/Components/Dashboard/Carousel";
+
+const DummyProducts: ProductCardType[] = Array.from({ length: 1000 }).map(
+    (id, index) => {
+        faker.seed(index);
+        const DummyProduct: ProductCardType = {
+            ID: faker.string.ulid(),
+            Thubnail: faker.image.urlPicsumPhotos({ height: 800, width: 1000 }),
+            Title: faker.commerce.productName(),
+            price: faker.commerce.price({
+                symbol: "Rp",
+                min: 10000,
+                max: 500000,
+            }),
+        };
+        return DummyProduct;
+    }
+);
 
 export default function Page() {
+    const [Dummy, SetDummy] = useState(DummyProducts);
+    const HandleSearch = (value: string): void => {
+        let Userfind: ProductCardType[] = DummyProducts;
+        if (value) {
+            Userfind = DummyProducts.filter((data) =>
+                data.Title.toLowerCase().includes(value.toLowerCase())
+            );
+        }
+        console.log(Userfind);
+        SetDummy(Userfind);
+    };
     return (
-        <AuthenticatedLayout>
-            <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset>
-                    <header className="flex h-16 shrink-0 items-center gap-2 border-b">
-                        <div className="flex items-center gap-2 px-3">
-                            <SidebarTrigger />
-                            <Separator
-                                orientation="vertical"
-                                className="mr-2 h-4"
-                            />
-                            <Breadcrumb>
-                                <BreadcrumbList>
-                                    <BreadcrumbItem className="hidden md:block">
-                                        <BreadcrumbLink href="#">
-                                            Building Your Application
-                                        </BreadcrumbLink>
-                                    </BreadcrumbItem>
-                                    <BreadcrumbSeparator className="hidden md:block" />
-                                    <BreadcrumbItem>
-                                        <BreadcrumbPage>
-                                            Data Fetching
-                                        </BreadcrumbPage>
-                                    </BreadcrumbItem>
-                                </BreadcrumbList>
-                            </Breadcrumb>
-                        </div>
-                    </header>
-                    <div className="flex flex-1 flex-col gap-4 p-4">
-                        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                            <div className="aspect-video rounded-xl bg-muted/50" />
-                            <div className="aspect-video rounded-xl bg-muted/50" />
-                            <div className="aspect-video rounded-xl bg-muted/50" />
-                        </div>
-                        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-                    </div>
-                </SidebarInset>
-            </SidebarProvider>
-        </AuthenticatedLayout>
+        <Authenticated
+            header={{ Parrent: "Dashboard" }}
+            className="flex flex-col space-y-5"
+        >
+            <CarouselDashboard />
+            <div className="sticky top-14 pb-5 flex flex-col gap-y-5 bg-white z-50">
+                <TextInput
+                    placeholder="Search"
+                    onKeyDown={(e) =>
+                        e.keyCode === 13 && HandleSearch(e.target.value)
+                    }
+                />
+                <div className="flex space-x-1 w-1/2 ml-auto">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">
+                            Open
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Billing</DropdownMenuItem>
+                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="border-[1px] rounded-md flex-1 py-0.5">
+                            Open
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Billing</DropdownMenuItem>
+                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            </div>
+
+            <div className="grid grid-col-2 md:grid-cols-6 gap-7 md:gap-2">
+                {Dummy.map((item) => (
+                    <ProductCard Data={item} />
+                ))}
+            </div>
+            {/* <CarouselComponent /> */}
+        </Authenticated>
     );
 }
