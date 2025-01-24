@@ -13,6 +13,7 @@ export default function Edit({
     return (
         <AuthenticatedLayout
             header={{ Parrent: "Profile", Submenu: "Profile Setting" }}
+            className="flex flex-col gap-y-5"
         >
             <Head title="Profile Setting" />
             <div className="flex flex-col space-y-5 md:space-y-0 md:flex-row md:space-x-6">
