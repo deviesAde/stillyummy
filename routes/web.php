@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\WalletCOntroller;
+use App\Http\Middleware\MerchantAuthor;
 use App\Http\Middleware\UserAuth;
+use App\Http\Middleware\UserAuthor;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,15 +29,20 @@ Route::get('/', function (Request $request) {
 
 Route::get('/Product/{id}', [ProductController::class, 'GetProduct']);
 
-Route::get('/error', function () {
-    return redirect()->back()->with('error', 'test');
-});
-
 Route::middleware('auth')->group(function () {
     Route::get('/profilesetting', [ProfileController::class, 'edit'])->name('profilesetting');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('Wallet', WalletCOntroller::class);
+    Route::resource('merchant', MerchantController::class)->middleware(MerchantAuthor::class);
+
+    Route::middleware(UserAuthor::class)->group(function () {
+        Route::resource('transaction', TransactionController::class);
+        Route::prefix('/cart')->group(function () {
+            Route::get('/', [CartController::class, 'index'])->name('cart.index');
+        });
+    });
 });
 
 require __DIR__ . '/auth.php';

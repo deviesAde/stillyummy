@@ -29,7 +29,7 @@ export default function ProductPage() {
     return (
         <div className="flex">
             <Authenticated
-                header={{ Parrent: "Product" }}
+                header={{ Parent: "Product" }}
                 className="flex xl:grid-cols-3 gap-x-10 gap-y-5"
             >
                 <div className="md:w-2/3 flex flex-col xl:flex-row gap-5">

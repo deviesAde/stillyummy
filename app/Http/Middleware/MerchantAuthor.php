@@ -17,6 +17,8 @@ class MerchantAuthor
     {
         if ($request->user()->role == 'Merchant') {
             return $next($request);
+        }else{
+            return back();
         }
     }
 }

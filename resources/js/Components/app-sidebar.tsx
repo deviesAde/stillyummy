@@ -58,23 +58,8 @@ const data = {
         },
         Wallet: {
             name: "Dompetku",
-            url: "#",
+            url: route("Wallet.index"),
             icon: Wallet2,
-            isActive: true,
-            items: [
-                {
-                    title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
         },
         Cart: {
             title: "Models",
@@ -97,12 +82,11 @@ const data = {
         },
         Merchant_Setting: {
             title: "Merchant",
-            url: "#",
             icon: Store,
             items: [
                 {
-                    title: "Menunggu Pembayaran",
-                    url: "#",
+                    title: "Merchant Profile",
+                    url: route("merchant.index"),
                 },
                 {
                     title: "Sedang Berlangsung",

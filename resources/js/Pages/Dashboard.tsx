@@ -46,7 +46,7 @@ export default function Page() {
     };
     return (
         <Authenticated
-            header={{ Parrent: "Dashboard" }}
+            header={{ Parent: "Dashboard" }}
             className="flex flex-col space-y-5"
         >
             <CarouselDashboard />

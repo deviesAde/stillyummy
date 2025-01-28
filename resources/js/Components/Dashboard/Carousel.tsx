@@ -6,6 +6,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+
 import { faker } from "@faker-js/faker";
 
 export default function CarouselDashboard() {

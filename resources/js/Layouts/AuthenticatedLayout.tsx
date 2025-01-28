@@ -2,19 +2,16 @@ import { Link, usePage } from "@inertiajs/react";
 import { PropsWithChildren, ReactNode, useState } from "react";
 import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/Components/ui/sidebar";
 import { AppSidebar } from "@/Components/app-sidebar";
-import { ShoppingBasket, AlignLeft } from "lucide-react";
+import { ShoppingBasket} from "lucide-react";
 import { HeaderType } from "@/types/HeaderType";
 import { cn } from "@/lib/utils";
+import { router } from "@inertiajs/react";
 export default function Authenticated({
     header,
     children,
     className,
-}: PropsWithChildren<{ header?: HeaderType,className?: string}>) {
+}: PropsWithChildren<{ header: HeaderType,className?: string}>) {
     const user = usePage().props.auth.user;
-
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
-
     return (
         <SidebarProvider>
             <Sidebar>
@@ -28,14 +25,14 @@ export default function Authenticated({
                         <h1
                             className= {header?.Submenu ? "hidden md:block" : "text-black"}
                         >
-                            {header?.Parrent}
+                            {header?.Parent}
                         </h1>
                         {header?.Submenu && (
                             <h1 className="text-x hidden md:block">{">"}</h1>
                         )}
                         <h1 className="text-black">{header?.Submenu}</h1>
                     </div>
-                    <ShoppingBasket />
+                    {(user?.role === "User" || !user) && <ShoppingBasket onClick={()=>router.get(route('cart.index'))} className="hover:cursor-pointer"/>}
                 </div>
                 <main className={cn("m-5 md:m-10",className)}>{children}</main>
             </div>

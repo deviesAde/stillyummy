@@ -1,4 +1,4 @@
 export interface HeaderType {
-    Parrent : string;
+    Parent : string;
     Submenu?:string
 }
