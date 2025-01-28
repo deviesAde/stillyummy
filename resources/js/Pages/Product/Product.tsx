@@ -1,14 +1,15 @@
 import { ProductCardType } from "@/types/ProductCardType";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { faker, tr } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import CarouselProduct from "@/Components/Product/Carousel";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-
+import ProductModal from "@/Components/Product/ProductModal";
+import ButtonFooter from "@/Components/Product/ButtonFooter";
+import { Button } from "@/Components/ui/button";
+import ProductDescription from "@/Components/Product/ProductDescription";
+import StockCard from "@/Components/Product/StockCard";
 export default function ProductPage() {
-    faker.seed(1)
+    faker.seed(1);
     const Product: ProductCardType = {
         ID: faker.string.ulid(),
         Thubnail: Array.from({ length: 3 }).map(() =>
@@ -16,67 +17,47 @@ export default function ProductPage() {
         ),
         Title: faker.commerce.productName(),
         Description: faker.lorem.paragraphs(),
-        price: faker.commerce.price({ min: 10000, max: 100000, symbol: "Rp" }),
+        price: faker.number.float({
+            min: 10000,
+            max: 100000,
+            fractionDigits: 2,
+        }),
         SellerDescription: faker.lorem.paragraph(),
+        Stock: faker.number.int({ min: 0, max: 10 }),
     };
-    console.log(Product)
-    const [Description, SetDescription] = useState(true);
-
+    const [Modal, SetModal] = useState(false);
     return (
-        <Authenticated header={{ Parrent: "Product" }} className="grid md:grid-cols-3 gap-x-10 gap-y-5">
-            {/* <div className="grid md:grid-cols-3 gap-x-10 gap-y-5"> */}
-                <CarouselProduct />
-                <div className="flex flex-col space-y-5">
-                    <div className="space-y-5 mt-5 md:mt-0">
-                        <h1 className="font-bold text-xl">{Product.Title}</h1>
-                        <h1 className="font-extrabold text-2xl">
-                            {Product.price}
-                        </h1>
-                    </div>
-                    <div className="flex flex-col gap-y-5">
-                        <div className="flex border-y-[0.1px] items-center">
-                            <h1
-                                className={cn(
-                                    "py-3 w-fit px-2.5 transition duration-0 hover:cursor-pointer",
-                                    Description &&
-                                        "border-b-2 border-black font-bold duration-200 ease-in-out"
-                                )}
-                                onClick={() => SetDescription(true)}
-                            >
-                                Deskripsi
-                            </h1>
-                            <h1
-                                className={cn(
-                                    "py-3 w-fit px-2.5 transition duration-0 hover:cursor-pointer",
-                                    !Description &&
-                                        "border-b-2 border-black font-bold duration-200 ease-in-out"
-                                )}
-                                onClick={() => SetDescription(false)}
-                            >
-                                Informasi Toko
-                            </h1>
-                        </div>
-                        <div>
-                            {Description ? (
-                                <h3 className="text-justify">
-                                    {Product.Description}
-                                </h3>
-                            ) : (
-                                <h3 className="text-justify">
-                                    {Product.SellerDescription}
-                                </h3>
-                            )}
-                        </div>
-                    </div>
+        <div className="flex">
+            <Authenticated
+                header={{ Parrent: "Product" }}
+                className="flex xl:grid-cols-3 gap-x-10 gap-y-5"
+            >
+                <div className="md:w-2/3 flex flex-col xl:flex-row gap-5">
+                    <CarouselProduct />
+                    <ProductDescription Product={Product} />
                 </div>
-            {/* </div> */}
-            <div className="flex fixed bottom-0 pb-10 w-full pr-10 md:hidden bg-white gap-x-5 mt-5">
-                <Button className="flex-1 bg-transparent border-[1px] border-black text-black hover:bg-gray-100">
-                    <Plus color="black" />
-                    <h1 className="mt-0.5">Keranjang</h1>
-                </Button>
-                <Button className="flex-1"><h1 className="mt-0.5">Beli Sekarang</h1></Button>
-            </div>
-        </Authenticated>
+                <div className="md:w-1/3 hidden md:block">
+                    <StockCard Product={Product} />
+                </div>
+
+                {Product.Stock ? (
+                    <ButtonFooter
+                        className="flex fixed bottom-0 pb-10 w-full pr-10 md:hidden bg-white gap-x-5 mt-5"
+                        Action1={() => SetModal(true)}
+                        Action2={() => SetModal(true)}
+                    />
+                ) : (
+                    <div className="fixed bottom-0 pb-10 pr-10 w-full md:hidden">
+                        <Button
+                            disabled
+                            className="w-full bg-white text-black border-2 border-black"
+                        >
+                            Stock Habis
+                        </Button>
+                    </div>
+                )}
+            </Authenticated>
+            {Modal && <ProductModal Data={Product} onClick={SetModal} />}
+        </div>
     );
 }

@@ -15,17 +15,17 @@ import { useState } from "react";
 
 import CarouselDashboard from "@/Components/Dashboard/Carousel";
 
-const DummyProducts: ProductCardType[] = Array.from({ length: 1000 }).map(
+const DummyProducts: ProductCardType[] = Array.from({ length: 10 }).map(
     (id, index) => {
         faker.seed(index);
         const DummyProduct: ProductCardType = {
             ID: faker.string.ulid(),
             Thubnail: faker.image.urlPicsumPhotos({ height: 800, width: 1000 }),
             Title: faker.commerce.productName(),
-            price: faker.commerce.price({
-                symbol: "Rp",
+            price: faker.number.float({
                 min: 10000,
                 max: 500000,
+                fractionDigits:2
             }),
         };
         return DummyProduct;
@@ -56,7 +56,7 @@ export default function Page() {
                     onKeyDown={(e) =>
                         e.keyCode === 13 && HandleSearch(e.target.value)
                     }
-                />
+            />
                 <div className="flex space-x-1 w-1/2 ml-auto">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">
@@ -92,7 +92,6 @@ export default function Page() {
                     <ProductCard Data={item} />
                 ))}
             </div>
-            {/* <CarouselComponent /> */}
         </Authenticated>
     );
 }
