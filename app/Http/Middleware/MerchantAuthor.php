@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Error;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
 class MerchantAuthor
@@ -17,8 +19,9 @@ class MerchantAuthor
     {
         if ($request->user()->role == 'Merchant') {
             return $next($request);
-        }else{
-            return back();
+        } else {
+            $Error = ['ErrorCode' => 401, 'ErrorMessage' => 'You are not authorized to access this page',"Error" => "Not Authorized"];
+            abort(401);
         }
     }
 }

@@ -181,12 +181,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
             </SidebarHeader>
             <SidebarContent className="flex flex-col py-5">
-                <NavProjects projects={[data.nav.Dashboard]} />
-                <NavMain items={[data.nav.Transaction]} />
-                <NavProjects projects={[data.nav.Wallet]} />
                 {UserSession?.role=== "Merchant" && (
                     <NavMain items={[data.nav.Merchant_Setting]} />
                 )}
+                {UserSession?.role !== "Merchant" && <NavProjects projects={[data.nav.Dashboard]} />}
+                <NavMain items={[data.nav.Transaction]} />
+                {UserSession?.role !== "Admin" && <NavProjects projects={[data.nav.Wallet]} />}
                 <NavMain items={[data.nav.Profile]} />
             </SidebarContent>
 

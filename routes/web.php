@@ -24,6 +24,9 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function (Request $request) {
+    if ($request->user()->role === 'Merchant'){
+        return redirect('/merchant');
+    }
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
