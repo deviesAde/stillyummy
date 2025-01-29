@@ -27,10 +27,12 @@ export default function TakedownProduct({
                 </CardHeader>
                 <CardContent>
                     <InputLabel>Keterangan</InputLabel>
-                    <Textarea/>
+                    <Textarea />
                 </CardContent>
                 <CardFooter>
-                    <Button className="w-full" onClick={() => onClick(false)}>Submit</Button>
+                    <Button className="w-full" onClick={() => onClick(false)}>
+                        Submit
+                    </Button>
                 </CardFooter>
             </Card>
         </div>
