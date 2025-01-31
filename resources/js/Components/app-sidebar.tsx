@@ -108,21 +108,13 @@ const data = {
             icon: PackageCheckIcon,
             items: [
                 {
-                    title: "Menunggu Pembayaran",
-                    url: "#",
-                },
-                {
                     title: "Sedang Berlangsung",
-                    url: "#",
+                    url: route('transaction.index'),
                 },
                 {
-                    title: "Dalam Pengiriman",
+                    title: "Selesai",
                     url: "#",
-                },
-                {
-                    title: "Riwayat Transaksi",
-                    url: "#",
-                },
+                }
             ],
         },
         Profile: {
@@ -141,24 +133,6 @@ const data = {
             ],
         },
     },
-
-    projects: [
-        {
-            name: "Design Engineering",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "Sales & Marketing",
-            url: "#",
-            icon: PieChart,
-        },
-        {
-            name: "Travel",
-            url: "#",
-            icon: Map,
-        },
-    ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
