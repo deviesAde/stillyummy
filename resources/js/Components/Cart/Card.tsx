@@ -37,7 +37,7 @@ export default function CardCart({ Data }: { Data: CartItemTypes }) {
     return (
         <Card>
             <CardHeader className="p-0 border-b-[0.5px] py-2 flex flex-row items-center pl-5">
-            <Input type="checkbox" className="max-w-max max-h-max" />
+            <Input type="radio" className="max-w-max max-h-max" name="merchant"/>
                 <div className="flex items-center gap-x-1 font-bold ml-5">
                     <LucideShoppingBag className="max-h-5" />
                     <h1>{Data.MerchantName}</h1>

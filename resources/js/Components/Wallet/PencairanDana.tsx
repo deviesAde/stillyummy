@@ -12,7 +12,7 @@ export default function PencairanDana() {
                 <CardTitle>Pencairan Dana</CardTitle>
             </CardHeader>
             <CardContent className="px-0">
-                <div className="flex w-ful space-x-5 px-5 border-b-2">
+                <div className="flex w-ful space-x-5 px-5 border-b-[1px]">
                     <h1
                         className={cn(
                             "py-1 border-b-2 border-transparent hover:cursor-pointer",

@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import { faker } from "@faker-js/faker/locale/id_ID";
 import { CartItemTypes } from "@/types/CartItemType";
 import CardCart from "@/Components/Cart/Card";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/Components/ui/card";
 
 const CartItems = Array.from({ length: 5 }).map((item, index) => {
-    const merchant:CartItemTypes = {};
+    const merchant:CartItemTypes = {
+        MerchantName : "",
+        MerchantProduct : []
+    };
     merchant.MerchantName = faker.lorem.word();
     merchant.MerchantProduct = [];
     Array.from({ length: index + 1 }).forEach(() => {

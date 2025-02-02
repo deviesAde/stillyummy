@@ -18,7 +18,7 @@ export default function Authenticated({
                 <AppSidebar />
             </Sidebar>
             <div className="flex-1 pb-10">
-                <div className="z-50 sticky top-0 bg-white border-b-[1px] border-gray-300 py-4 px-5 md:px-10 w-full text-md sm:text-md text-gray-500 flex gap-x-3 items-center justify-between">
+                <div className="z-40 sticky top-0 bg-white border-b-[1px] border-gray-300 py-4 px-5 md:px-10 w-full text-md sm:text-md text-gray-500 flex gap-x-3 items-center justify-between">
                     <div className="flex items-center gap-x-3">
                         <SidebarTrigger className="md:hidden"/>
                         <h1 className="text-xs">|</h1>

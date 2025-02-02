@@ -15,7 +15,7 @@ import { useState } from "react";
 
 import CarouselDashboard from "@/Components/Dashboard/Carousel";
 
-const DummyProducts: ProductCardType[] = Array.from({ length: 10 }).map(
+const DummyProducts: ProductCardType[] = Array.from({ length: 100 }).map(
     (id, index) => {
         faker.seed(index);
         const DummyProduct: ProductCardType = {
