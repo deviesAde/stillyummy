@@ -57,7 +57,7 @@ export default function Page() {
                         e.keyCode === 13 && HandleSearch(e.target.value)
                     }
             />
-                <div className="flex space-x-1 w-1/2 ml-auto">
+                {/* <div className="flex space-x-1 w-1/2 ml-auto">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">
                             Open
@@ -84,7 +84,7 @@ export default function Page() {
                             <DropdownMenuItem>Subscription</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                </div>
+                </div> */}
             </div>
 
             <div className="grid grid-col-2 md:grid-cols-6 gap-7 md:gap-2">

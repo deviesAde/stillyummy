@@ -28,7 +28,7 @@ export default function Cart() {
             header={{ Parent: "Keranjang" }}
             className="flex flex-col gap-y-4"
         >
-            <Card className="sticky top-20 flex justify-end py-2 font-semibold">
+            <Card className="hidden sticky top-20 md:flex justify-end py-2 font-semibold">
                 <div className="flex w-3/4 text-center">
                     <h1 className="flex-1">Product</h1>
                     <h1 className="flex-1">Harga Satuan</h1>
@@ -38,7 +38,7 @@ export default function Cart() {
                 </div>
             </Card>
             {CartItems.map((item)=> <CardCart Data={item}/>)}
-            <div className="rounded-lg fixed left-10 md:left-72 bottom-0 right-10 flex justify-between p-5 bg-white border-[0.5px] items-center">
+            <div className="rounded-lg fixed left-0 md:left-72 bottom-0 md:right-10 right-0 flex justify-between p-5 bg-white border-[0.5px] items-center">
                 <h1 className="text-xl font-bold">
                     {new Intl.NumberFormat("id-ID", {
                         style: "currency",

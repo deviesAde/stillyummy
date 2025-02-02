@@ -50,7 +50,7 @@ export default function ProductPage() {
                     ) : <CardTakedown onClick={SetModalAdmin}/>}
                 </div>
 
-                {SessionInfo.role !== "Admin" && (
+                {SessionInfo?.role !== "Admin" && (
                     <>
                         {Product.Stock ? (
                             <ButtonFooter
@@ -70,7 +70,7 @@ export default function ProductPage() {
                         )}
                     </>
                 )}
-                {SessionInfo.role === "Admin" && (
+                {SessionInfo?.role === "Admin" && (
                     <div className="fixed bottom-0 pb-10 pr-10 w-full md:hidden">
                         <Button
                             className="w-full"
