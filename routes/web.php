@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('Wallet', WalletCOntroller::class);
+    Route::resource('Wallet', WalletCOntroller::class)->except(['create', 'show','delete','destroy','edit']);
     Route::resource('merchant', MerchantController::class)->middleware(MerchantAuthor::class);
 
     Route::middleware(UserAuthor::class)->group(function () {

@@ -5,6 +5,7 @@ import { faker } from "@faker-js/faker/locale/id_ID";
 import { CartItemTypes } from "@/types/CartItemType";
 import CardCart from "@/Components/Cart/Card";
 import { Card } from "@/Components/ui/card";
+import { router } from "@inertiajs/react";
 
 const CartItems = Array.from({ length: 5 }).map((item, index) => {
     const merchant:CartItemTypes = {
@@ -48,7 +49,7 @@ export default function Cart() {
                         currency: "IDR",
                     }).format(Amount)}
                 </h1>
-                <Button>Bayar Sekarang</Button>
+                <Button onClick={()=>router.get(route('transaction.create'))}>Bayar Sekarang</Button>
             </div>
         </Authenticated>
     );

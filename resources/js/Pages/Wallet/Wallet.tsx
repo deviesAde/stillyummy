@@ -6,6 +6,7 @@ import { useState } from "react";
 import RiwayatSaldo from "@/Components/Wallet/RiwayatSaldo";
 import PencairanDana from "@/Components/Wallet/PencairanDana";
 import TarikSaldo from "@/Components/Wallet/TarikSaldo";
+import { faker } from "@faker-js/faker/locale/id_ID";
 
 export default function WalletPage() {
     const [ModalTarikSaldo, SetModalTarikSaldo] = useState<boolean>(false);
@@ -27,7 +28,7 @@ export default function WalletPage() {
                                         {new Intl.NumberFormat("id-ID", {
                                             style: "currency",
                                             currency: "IDR",
-                                        }).format(10000)}
+                                        }).format(faker.number.int({max:2000000}))}
                                     </h1>
                                 </div>
                             </div>

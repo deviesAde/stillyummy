@@ -18,7 +18,7 @@ export default function TransferBank() {
                     <option value="audi">BCA</option>
                 </select>
             </div>
-            <div className="w-full flex flex-col gap-y-1">
+        <div className="w-full flex flex-col gap-y-1">
                 <Label>Nomor Rekening</Label>
                 <Input type="number" />
             </div>

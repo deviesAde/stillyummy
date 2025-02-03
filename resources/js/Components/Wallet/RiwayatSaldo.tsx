@@ -1,11 +1,12 @@
-import { Card,CardHeader,CardContent,CardTitle } from "../ui/card";
+import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function RiwayatSaldo() {
-    const[subPage,SetSubPage] = useState<Boolean>(false)
+    const [subPage, SetSubPage] = useState<Boolean>(false);
     return (
-        <Card className="flex-1 h-fit">
+        <Card className="flex-1 ">
             <CardHeader className="text-2xl font-black">
                 <CardTitle>Riwayat Saldo</CardTitle>
             </CardHeader>
@@ -30,6 +31,38 @@ export default function RiwayatSaldo() {
                         Pengeluaran
                     </h1>
                 </div>
+            </CardContent>
+            <CardContent>
+                <ScrollArea className="h-[510px]">
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+                    <h1>a</h1>
+
+                </ScrollArea>
             </CardContent>
         </Card>
     );

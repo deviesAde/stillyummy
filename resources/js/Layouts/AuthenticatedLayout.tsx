@@ -1,6 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import { PropsWithChildren, ReactNode, useState } from "react";
-import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/Components/ui/sidebar";
+import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/Components/app-sidebar";
 import { ShoppingBasket} from "lucide-react";
 import { HeaderType } from "@/types/HeaderType";
