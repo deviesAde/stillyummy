@@ -27,6 +27,13 @@ const CartItems = Array.from({ length: 5 }).map((item, index) => {
 });
 export default function Cart() {
     const [Amount, SetAmount] = useState(0);
+
+    async function CreateSnapToket(){
+        const Respons = await router.post(route('transaction.store'),{
+            "gross_amount" : faker.number.int({min:10000,max:100000})
+        })
+        console.log(Respons)
+    }
     return (
         <Authenticated
             header={{ Parent: "Keranjang" }}
@@ -49,7 +56,7 @@ export default function Cart() {
                         currency: "IDR",
                     }).format(Amount)}
                 </h1>
-                <Button onClick={()=>router.get(route('transaction.create'))}>Bayar Sekarang</Button>
+                <Button onClick={CreateSnapToket}>Bayar Sekarang</Button>
             </div>
         </Authenticated>
     );
