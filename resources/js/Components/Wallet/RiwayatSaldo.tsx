@@ -5,6 +5,7 @@ import { ScrollArea } from "../ui/scroll-area";
 
 export default function RiwayatSaldo() {
     const [subPage, SetSubPage] = useState<Boolean>(false);
+    
     return (
         <Card className="flex-1 ">
             <CardHeader className="text-2xl font-black">
