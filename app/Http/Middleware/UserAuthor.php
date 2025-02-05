@@ -18,5 +18,7 @@ class UserAuthor
         if ($request->user()->role == 'User') {
             return $next($request);
         }
+
+        abort(401);
     }
 }

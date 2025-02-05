@@ -7,6 +7,9 @@ use Inertia\Inertia;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Symfony\Component\Uid\Ulid;
+use Illuminate\Support\Facades\Validator;
+
+use function Laravel\Prompts\error;
 
 class TransactionController extends Controller
 {
@@ -37,22 +40,27 @@ class TransactionController extends Controller
 
         $item_details = $Request->input('item_details');
 
-        $item_details = [
-            [
-                "id" => "item-001",
-                "name" => "Product A",
-                "price" => 50000,
-                "quantity" => 1,
-                "image_url" => fake("id_ID")->imageUrl(),  // Foto produk A
-            ],
-            [
-                "id" => "item-002",
-                "name" => "Product B",
-                "price" => 50000,
-                "quantity" => 1,
-                "image_url" => fake("id_ID")->imageUrl(),  // Foto produk B
-            ]
-        ];
+        $validate = Validator::make($Request->all(),['item_details' =>'required']);
+        if($validate->fails()){
+            return redirect()->back()->with('error','Harap Memilih Product yang Akan diCheckout');
+        }
+        // dd($Request->all());
+        // $item_details = [
+        //     [
+        //         "id" => "item-001",
+        //         "name" => "Product A",
+        //         "price" => 50000,
+        //         "quantity" => 1,
+        //         "image_url" => fake("id_ID")->imageUrl(),  // Foto produk A
+        //     ],
+        //     [
+        //         "id" => "item-002",
+        //         "name" => "Product B",
+        //         "price" => 50000,
+        //         "quantity" => 1,
+        //         "image_url" => fake("id_ID")->imageUrl(),  // Foto produk B
+        //     ]
+        // ];
 
         $params = array(
             'transaction_details' => array(
@@ -72,8 +80,7 @@ class TransactionController extends Controller
             ),
         );
 
-        $SnapToken =  Snap::getSnapToken($params);
-        dd($SnapToken);
-        return redirect()->route('transaction.create');
+        $SnapToken =  Snap::createTransaction($params);
+        return redirect()->route('transaction.create')->with('success',$SnapToken);
     }
 }

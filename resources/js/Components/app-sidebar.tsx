@@ -58,7 +58,7 @@ const data = {
         },
         Wallet: {
             name: "Dompetku",
-            url: route("Wallet.index"),
+            url: route("wallet.index"),
             icon: Wallet2,
         },
         Cart: {

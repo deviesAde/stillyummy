@@ -24,7 +24,7 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function (Request $request) {
-    if ($request->user()?->role === 'Merchant'){
+    if ($request->user()?->role === 'Merchant') {
         return redirect('/merchant');
     }
     return Inertia::render('Dashboard');
@@ -37,11 +37,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('Wallet', WalletCOntroller::class)->except(['create', 'show','delete','destroy','edit']);
-    Route::resource('merchant', MerchantController::class)->middleware(MerchantAuthor::class);
 
+    Route::get('wallet', [WalletCOntroller::class,'index'])->name('wallet.index');
+    Route::post('wallet', [WalletCOntroller::class,'TarikSaldo'])->name('wallet.post');
+
+    Route::prefix('/merchant')->group(function () {
+        Route::get('/',[MerchantController::class,'index'])->name('merchant.index');
+
+    })->middleware(MerchantAuthor::class);
+
+    Route::resource('transaction', TransactionController::class);
+    
     Route::middleware(UserAuthor::class)->group(function () {
-        Route::resource('transaction', TransactionController::class);
         Route::prefix('/cart')->group(function () {
             Route::get('/', [CartController::class, 'index'])->name('cart.index');
         });

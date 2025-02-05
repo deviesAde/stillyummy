@@ -1,13 +1,16 @@
-export interface MerchantProductCartType{
-    ProductName: string,
-    ProductPrice: number,
+export interface MerchantProductCartType {
+    id: string
+    name: string,
+    price: number,
     ProductStock: number,
     ProductPhoto: string,
-    ProductAmount: number
+    quantity: number
+    ProductSubtotal?: number
+
 }
 
-export interface CartItemTypes{
-    MerchantName : string;
-    MerchantProduct : MerchantProductCartType[]
+export interface CartItemTypes {
+    MerchantName: string;
+    MerchantProduct: MerchantProductCartType[]
 }
 

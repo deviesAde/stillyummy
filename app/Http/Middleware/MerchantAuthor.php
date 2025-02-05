@@ -19,9 +19,7 @@ class MerchantAuthor
     {
         if ($request->user()->role == 'Merchant') {
             return $next($request);
-        } else {
-            $Error = ['ErrorCode' => 401, 'ErrorMessage' => 'You are not authorized to access this page',"Error" => "Not Authorized"];
-            abort(401);
         }
+        abort(401);
     }
 }
