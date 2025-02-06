@@ -89,17 +89,13 @@ const data = {
                     url: route("merchant.index"),
                 },
                 {
-                    title: "Sedang Berlangsung",
-                    url: "#",
+                    title: "Products",
+                    url: route('merchant.products'),
                 },
                 {
-                    title: "Dalam Pengiriman",
-                    url: "#",
-                },
-                {
-                    title: "Riwayat Transaksi",
-                    url: "#",
-                },
+                    title: "Analytic Transaction",
+                    url: route('merchant.analytic'),
+                }
             ],
         },
         Transaction: {
@@ -113,7 +109,7 @@ const data = {
                 },
                 {
                     title: "Selesai",
-                    url: "#",
+                    url: route('transaction.riwayat'),
                 }
             ],
         },

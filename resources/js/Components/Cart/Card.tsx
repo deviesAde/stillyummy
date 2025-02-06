@@ -103,7 +103,7 @@ export default function CardCart({
     }
 
     useEffect(()=>{
-        if(checkbox.current.checked) {
+        if(checkbox.current?.checked) {
             Calculate();
         }
     },[MerchantProduct])

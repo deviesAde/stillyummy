@@ -13,6 +13,10 @@ use function Laravel\Prompts\error;
 
 class TransactionController extends Controller
 {
+    public function index_riwayat()
+    {
+        return Inertia::render('Transaction/Finish');
+    }
     public function index(Request $Request)
     {
         return Inertia::render('Transaction/OnProcess');
@@ -40,9 +44,9 @@ class TransactionController extends Controller
 
         $item_details = $Request->input('item_details');
 
-        $validate = Validator::make($Request->all(),['item_details' =>'required']);
-        if($validate->fails()){
-            return redirect()->back()->with('error','Harap Memilih Product yang Akan diCheckout');
+        $validate = Validator::make($Request->all(), ['item_details' => 'required']);
+        if ($validate->fails()) {
+            return redirect()->back()->with('error', 'Harap Memilih Product yang Akan diCheckout');
         }
         // dd($Request->all());
         // $item_details = [
@@ -81,6 +85,6 @@ class TransactionController extends Controller
         );
 
         $SnapToken =  Snap::createTransaction($params);
-        return redirect()->route('transaction.create')->with('success',$SnapToken);
+        return redirect()->route('transaction.create')->with('success', $SnapToken);
     }
 }
