@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Error;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
 class MerchantAuthor
@@ -18,5 +20,6 @@ class MerchantAuthor
         if ($request->user()->role == 'Merchant') {
             return $next($request);
         }
+        abort(401);
     }
 }

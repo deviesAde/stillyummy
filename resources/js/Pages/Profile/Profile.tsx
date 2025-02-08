@@ -11,7 +11,7 @@ export default function Edit({
 
     return (
         <AuthenticatedLayout
-            header={{ Parrent: "Profile", Submenu: "Profile Information" }} className="flex flex-col gap-y-10"
+            header={{ Parent: "Profile", Submenu: "Profile Information" }} className="flex flex-col gap-y-10"
         >
             <div className="w-1/3 flex gap-x-5 hover:cursor-pointer">
                 <div className="flex-1" onClick={() => setSubpage(true)}>

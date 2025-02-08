@@ -58,23 +58,8 @@ const data = {
         },
         Wallet: {
             name: "Dompetku",
-            url: "#",
+            url: route("wallet.index"),
             icon: Wallet2,
-            isActive: true,
-            items: [
-                {
-                    title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
         },
         Cart: {
             title: "Models",
@@ -97,25 +82,20 @@ const data = {
         },
         Merchant_Setting: {
             title: "Merchant",
-            url: "#",
             icon: Store,
             items: [
                 {
-                    title: "Menunggu Pembayaran",
-                    url: "#",
+                    title: "Merchant Profile",
+                    url: route("merchant.index"),
                 },
                 {
-                    title: "Sedang Berlangsung",
-                    url: "#",
+                    title: "Products",
+                    url: route('merchant.products'),
                 },
                 {
-                    title: "Dalam Pengiriman",
-                    url: "#",
-                },
-                {
-                    title: "Riwayat Transaksi",
-                    url: "#",
-                },
+                    title: "Analytic Transaction",
+                    url: route('merchant.analytic'),
+                }
             ],
         },
         Transaction: {
@@ -124,21 +104,13 @@ const data = {
             icon: PackageCheckIcon,
             items: [
                 {
-                    title: "Menunggu Pembayaran",
-                    url: "#",
-                },
-                {
                     title: "Sedang Berlangsung",
-                    url: "#",
+                    url: route('transaction.index'),
                 },
                 {
-                    title: "Dalam Pengiriman",
-                    url: "#",
-                },
-                {
-                    title: "Riwayat Transaksi",
-                    url: "#",
-                },
+                    title: "Selesai",
+                    url: route('transaction.riwayat'),
+                }
             ],
         },
         Profile: {
@@ -157,24 +129,6 @@ const data = {
             ],
         },
     },
-
-    projects: [
-        {
-            name: "Design Engineering",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "Sales & Marketing",
-            url: "#",
-            icon: PieChart,
-        },
-        {
-            name: "Travel",
-            url: "#",
-            icon: Map,
-        },
-    ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -197,12 +151,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
             </SidebarHeader>
             <SidebarContent className="flex flex-col py-5">
-                <NavProjects projects={[data.nav.Dashboard]} />
-                <NavMain items={[data.nav.Transaction]} />
-                <NavProjects projects={[data.nav.Wallet]} />
                 {UserSession?.role=== "Merchant" && (
                     <NavMain items={[data.nav.Merchant_Setting]} />
                 )}
+                {UserSession?.role !== "Merchant" && <NavProjects projects={[data.nav.Dashboard]} />}
+                <NavMain items={[data.nav.Transaction]} />
+                {UserSession?.role !== "Admin" && <NavProjects projects={[data.nav.Wallet]} />}
                 <NavMain items={[data.nav.Profile]} />
             </SidebarContent>
 

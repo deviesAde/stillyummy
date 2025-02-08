@@ -12,7 +12,7 @@ export default function Edit({
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
         <AuthenticatedLayout
-            header={{ Parrent: "Profile", Submenu: "Profile Setting" }}
+            header={{ Parent: "Profile", Submenu: "Profile Setting" }}
             className="flex flex-col gap-y-5"
         >
             <Head title="Profile Setting" />

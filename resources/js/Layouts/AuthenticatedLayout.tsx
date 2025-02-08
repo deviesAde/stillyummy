@@ -1,41 +1,38 @@
 import { Link, usePage } from "@inertiajs/react";
 import { PropsWithChildren, ReactNode, useState } from "react";
-import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/Components/ui/sidebar";
+import { Sidebar, SidebarProvider,SidebarTrigger, } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/Components/app-sidebar";
-import { ShoppingBasket, AlignLeft } from "lucide-react";
+import { ShoppingBasket} from "lucide-react";
 import { HeaderType } from "@/types/HeaderType";
 import { cn } from "@/lib/utils";
+import { router } from "@inertiajs/react";
 export default function Authenticated({
     header,
     children,
     className,
-}: PropsWithChildren<{ header?: HeaderType,className?: string}>) {
+}: PropsWithChildren<{ header: HeaderType,className?: string}>) {
     const user = usePage().props.auth.user;
-
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
-
     return (
         <SidebarProvider>
             <Sidebar>
                 <AppSidebar />
             </Sidebar>
             <div className="flex-1 pb-10">
-                <div className="z-50 sticky top-0 bg-white border-b-[1px] border-gray-300 py-4 px-5 md:px-10 w-full text-md sm:text-md text-gray-500 flex gap-x-3 items-center justify-between">
+                <div className="z-40 sticky top-0 bg-white border-b-[1px] border-gray-300 py-4 px-5 md:px-10 w-full text-md sm:text-md text-gray-500 flex gap-x-3 items-center justify-between">
                     <div className="flex items-center gap-x-3">
                         <SidebarTrigger className="md:hidden"/>
                         <h1 className="text-xs">|</h1>
                         <h1
                             className= {header?.Submenu ? "hidden md:block" : "text-black"}
                         >
-                            {header?.Parrent}
+                            {header?.Parent}
                         </h1>
                         {header?.Submenu && (
                             <h1 className="text-x hidden md:block">{">"}</h1>
                         )}
                         <h1 className="text-black">{header?.Submenu}</h1>
                     </div>
-                    <ShoppingBasket />
+                    {(user?.role === "User" || !user) && <ShoppingBasket onClick={()=>router.get(route('cart.index'))} className="hover:cursor-pointer"/>}
                 </div>
                 <main className={cn("m-5 md:m-10",className)}>{children}</main>
             </div>
