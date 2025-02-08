@@ -40,7 +40,7 @@ export default function Cart({ flash }: { flash: flashtype }) {
 
     async function CreateTransaction() {
         const response = await router.post(route("transaction.store"), {
-            item_details: cartItems.items,
+            item_details: cartItems.items as,
         });
     }
 

@@ -2,13 +2,18 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Textarea } from "@/Components/ui/textarea";
-import flashtype from "@/types/flashType";
-import { useState } from "react";
 import { Button } from "@/Components/ui/button";
+import { useForm } from "@inertiajs/react";
 
-export default function CreateProductPage({ flash }: { flash: flashtype }) {
-    const [Photo, setPhoto] = useState<Blob[] | MediaSource[]>();
-    console.log(Photo);
+export default function CreateProductPage() {
+    const { data, setData, post, errors } = useForm({
+        ProductName: "",
+        ProductPrice: null as number|null,
+        ProductStock: null as number|null,
+        ProductDescription: "",
+        ProductPhoto: [] as File[],
+    });
+    console.log(data);
     return (
         <Authenticated
             header={{ Parent: "Product", Submenu: "Tambah Product" }}
@@ -18,46 +23,89 @@ export default function CreateProductPage({ flash }: { flash: flashtype }) {
             <div className="flex flex-col gap-y-4">
                 <div>
                     <Label>Nama Product</Label>
-                    <Input placeholder="Nama Product" />
-                    {flash?.error?.Name && (
+                    <Input
+                        placeholder="Nama Product"
+                        value={data.ProductName}
+                        onChange={(e) => setData("ProductName", e.target.value)}
+                    />
+                    {errors.ProductName && (
                         <Label className="italic text-red-400 font-light">
-                            Harap Mengisi Nama Product
+                            {errors.ProductName}
                         </Label>
                     )}
                 </div>
                 <div>
                     <Label>Harga</Label>
-                    <Input placeholder="Harga" />
-                    {flash?.error?.Harga && (
-                        <Label className="italic text-red-400 font-light">
-                            Harap Mengisi Harga Product
+                    <Input
+                    className="remove-arrow"
+                        placeholder="Harga"
+                        type="number"
+                        value={data.ProductPrice ?? ''}
+                        onChange={(e) =>
+                            e.target.value ?
+                            setData(
+                                "ProductPrice",
+                                parseFloat(e.target.value)
+                            ) : setData(
+                                "ProductPrice",
+                                null
+                            )
+                        }
+                    />
+                    {errors.ProductPrice && (
+                        <Label className="italic text-r ed-400 font-light">
+                            {errors.ProductPrice}
                         </Label>
                     )}
                 </div>
                 <div>
                     <Label>Stock</Label>
-                    <Input placeholder="Stock" />
-                    {flash?.error?.Stock && (
+                    <Input
+                    className="remove-arrow"
+                        placeholder="Stock"
+                        type="number"
+                        value={data.ProductStock ?? ''}
+                        onChange={(e) =>
+                            e.target.value ?
+                            setData(
+                                "ProductStock",
+                                parseFloat(e.target.value)
+                            ) : setData(
+                                "ProductStock",
+                                null
+                            )
+                        }
+                    />
+                    {errors.ProductStock && (
                         <Label className="italic text-red-400 font-light">
-                            Harap Mengisi Stock Product
+                            {errors.ProductStock}
                         </Label>
                     )}
                 </div>
                 <div>
                     <Label>Deskripsi</Label>
-                    <Textarea placeholder="Deskripsi" className="h-60"/>
-                    {flash?.error?.Deskripsi && (
+                    <Textarea
+                        placeholder="Deskripsi"
+                        className="h-60"
+                        onChange={(e) =>
+                            setData("ProductDescription", e.target.value)
+                        }
+                    />
+                    {errors.ProductDescription && (
                         <Label className="italic text-red-400 font-light">
-                            Harap Mengisi Deskripsi Product
+                            {errors.ProductDescription}
                         </Label>
                     )}
                 </div>
-                <div className={`flex flex-col ${Photo ? "gap-y-5" : "gap-y-0.5"}`}>
+                <div
+                    className={`flex flex-col ${
+                        data.ProductPhoto ? "gap-y-5" : "gap-y-0.5"
+                    }`}
+                >
                     <Label>Foto</Label>
-                    {/* <input type="file" multiple onChange={HandleFileUpload} /> */}
                     <div className="grid grid-cols-5 gap-5">
-                        {Photo &&
-                            Photo.map((photo, index) => {
+                        {data.ProductPhoto &&
+                            data.ProductPhoto.map((photo, index) => {
                                 return (
                                     <div className="items-center flex flex-col gap-y-5">
                                         <img
@@ -80,12 +128,13 @@ export default function CreateProductPage({ flash }: { flash: flashtype }) {
                         multiple
                         type="file"
                         onChange={(e) =>
-                            e.target.files && setPhoto([...e.target.files])
+                            e.target.files &&
+                            setData("ProductPhoto", [...e.target.files])
                         }
                     />
-                    {flash?.error?.foto && (
+                    {errors.ProductPhoto && (
                         <Label className="italic text-red-400 font-light">
-                            Harap Mengupload Foto Product
+                            {errors.ProductPhoto}
                         </Label>
                     )}
                 </div>

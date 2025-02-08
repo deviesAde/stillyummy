@@ -13,7 +13,9 @@ function CardItems({
     SetStock,
 }: {
     item: MerchantProductCartType;
-    SetStock: (params:MerchantProductCartType[]) => void;
+    SetStock: (
+        params: (prev: MerchantProductCartType[]) => MerchantProductCartType[] | MerchantProductCartType[]
+    ) => void;
 }) {
     const [stock, setStock] = useState(item.quantity);
     const [price, setPrice] = useState(item.quantity * item.price);
@@ -25,16 +27,18 @@ function CardItems({
 
     useEffect(() => {
         setPrice(stock * item.price);
-        SetStock((prev)=>{
-            const previewdata = [...prev].map((isi:MerchantProductCartType)=>{
-                if (isi.id === item.id){
-                    isi.ProductSubtotal = stock * item.price
-                    isi.quantity = stock
+        SetStock((prev) => {
+            const previewdata = [...prev].map(
+                (isi: MerchantProductCartType) => {
+                    if (isi.id === item.id) {
+                        isi.ProductSubtotal = stock * item.price;
+                        isi.quantity = stock;
+                    }
+                    return isi;
                 }
-                return isi
-            })
-            return previewdata
-        })
+            );
+            return previewdata;
+        });
     }, [stock]);
     return (
         <div className="md:flex gap-x-10 items-center">
@@ -102,11 +106,11 @@ export default function CardCart({
         SetItem({ Total: result, items: MerchantProduct });
     }
 
-    useEffect(()=>{
-        if(checkbox.current?.checked) {
+    useEffect(() => {
+        if (checkbox.current?.checked) {
             Calculate();
         }
-    },[MerchantProduct])
+    }, [MerchantProduct]);
 
     return (
         <Card>
