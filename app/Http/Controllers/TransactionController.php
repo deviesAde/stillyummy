@@ -42,13 +42,7 @@ class TransactionController extends Controller
         Config::$serverKey = env("MIDTRANS_SERVER_KEY");
         Config::$isProduction = false;
 
-        $item_details = $Request->input('item_details');
-
-        $validate = Validator::make($Request->all(), ['item_details' => 'required']);
-        if ($validate->fails()) {
-            return redirect()->back()->with('error', 'Harap Memilih Product yang Akan diCheckout');
-        }
-        // dd($Request->all());
+        $Request->validate(['item_details' => 'required']);
         // $item_details = [
         //     [
         //         "id" => "item-001",
@@ -76,7 +70,7 @@ class TransactionController extends Controller
                 'email' => $Request->user()->email,
                 'phone' => $Request->user()->phone,
             ),
-            "item_details" => $item_details,
+            "item_details" => $Request->validated(),
             'custom_expiry' => array(
                 'start_time' => now()->toIso8601String(),
                 'duration' => 1,

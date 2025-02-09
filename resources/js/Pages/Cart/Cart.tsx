@@ -32,7 +32,7 @@ const CartItems = Array.from({ length: 5 }).map((item, index) => {
     return merchant;
 });
 
-export default function Cart({ flash }: { flash: flashtype }) {
+export default function Cart({ errors }: { errors: { item_details: string } }) {
     const [cartItems, SetCartItems] = useState<CreateTransactionType>({
         Total: 0,
         items: [],
@@ -40,17 +40,20 @@ export default function Cart({ flash }: { flash: flashtype }) {
 
     async function CreateTransaction() {
         const response = await router.post(route("transaction.store"), {
-            item_details: cartItems.items as,
+            item_details: cartItems.items as any,
         });
     }
-
+    console.log(errors);
     return (
         <Authenticated
             header={{ Parent: "Keranjang" }}
             className="flex flex-col gap-y-4"
         >
-            {flash?.error && <Card className="bg-red-100 p-10 font-bold border-red-600">{flash.error}</Card>}
-            {flash?.success && <Card className="bg-red-100 p-10 font-bold border-red-600">{flash.success}</Card>}
+            {errors?.item_details && (
+                <Card className="bg-red-100 p-10 font-bold border-red-600">
+                    {errors.item_details}
+                </Card>
+            )}
             <Card className="hidden sticky top-20 md:flex justify-end py-2 font-semibold">
                 <div className="flex w-3/4 text-center">
                     <h1 className="flex-1">Product</h1>
