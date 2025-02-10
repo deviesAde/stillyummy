@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\KurirController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -67,5 +68,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/product/{id}', [ProductController::class, 'GetProduct'])->name('product.index');
+
+Route::resource('Kurir', KurirController::class);
 
 require __DIR__ . '/auth.php';
