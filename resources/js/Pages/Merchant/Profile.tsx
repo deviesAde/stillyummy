@@ -6,7 +6,7 @@ import {
     CardContent,
     CardDescription,
 } from "@/Components/ui/card";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { APIProvider, Map, Marker, } from "@vis.gl/react-google-maps";
 import { faker } from "@faker-js/faker/locale/id_ID";
 import { useEffect, useState } from "react";
 

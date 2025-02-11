@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(MerchantAuthor::class)->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+            Route::get('/createbatch', [ProductController::class, 'createbatch'])->name('product.createbatch');
             Route::post('/', [ProductController::class, 'store'])->name('product.store');
         });
     });

@@ -21,7 +21,12 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        return Inertia::render('Product/create');
+        return Inertia::render('Product/Create');
+    }
+
+    public function createbatch(Request $request)
+    {
+        return Inertia::render('Product/CreateBatch');
     }
 
     public function store(Request $request)

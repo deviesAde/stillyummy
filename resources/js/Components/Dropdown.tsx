@@ -1,4 +1,3 @@
-import { Transition } from '@headlessui/react';
 import { InertiaLinkProps, Link } from '@inertiajs/react';
 import {
     createContext,
