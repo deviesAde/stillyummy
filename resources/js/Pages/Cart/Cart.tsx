@@ -5,9 +5,9 @@ import { faker } from "@faker-js/faker/locale/id_ID";
 import { CartItemTypes } from "@/types/CartItemType";
 import CardCart from "@/Components/Cart/Card";
 import { Card } from "@/Components/ui/card";
-import { router } from "@inertiajs/react";
 import flashtype from "@/types/flashType";
 import CreateTransactionType from "@/types/CreateTransactionType";
+import MakeTransactionPage from "@/services/MakeTransactionPage";
 
 const CartItems = Array.from({ length: 5 }).map((item, index) => {
     const merchant: CartItemTypes = {
@@ -37,21 +37,15 @@ export default function Cart({ errors }: { errors: { item_details: string } }) {
         Total: 0,
         items: [],
     });
-
-    async function CreateTransaction() {
-        const response = await router.post(route("transaction.store"), {
-            item_details: cartItems.items as any,
-        });
-    }
-    console.log(errors);
+    console.log();
     return (
         <Authenticated
             header={{ Parent: "Keranjang" }}
             className="flex flex-col gap-y-4"
         >
-            {errors?.item_details && (
+            {Object.values(errors)[0] && (
                 <Card className="bg-red-100 p-10 font-bold border-red-600">
-                    {errors.item_details}
+                    {Object.values(errors)[0]}
                 </Card>
             )}
             <Card className="hidden sticky top-20 md:flex justify-end py-2 font-semibold">
@@ -73,7 +67,7 @@ export default function Cart({ errors }: { errors: { item_details: string } }) {
                         currency: "IDR",
                     }).format(cartItems.Total)}
                 </h1>
-                <Button onClick={CreateTransaction}>Bayar Sekarang</Button>
+                <Button onClick={()=>MakeTransactionPage(cartItems)}>Bayar Sekarang</Button>
             </div>
         </Authenticated>
     );

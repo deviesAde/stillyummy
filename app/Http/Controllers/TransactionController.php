@@ -7,7 +7,6 @@ use Inertia\Inertia;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Symfony\Component\Uid\Ulid;
-use Illuminate\Support\Facades\Validator;
 
 use function Laravel\Prompts\error;
 
@@ -24,7 +23,17 @@ class TransactionController extends Controller
 
     public function create(Request $Request)
     {
-        return Inertia::render('Transaction/TransactionCreate');
+        $Data = $Request->session()->get('TransactionDetail');
+        dd($Request->session());
+        if(!$Data) abort(419);
+        return Inertia::render('Transaction/TransactionCreate', ['TransactionData' => $Data]);
+    }
+
+    public function To_Create_Page(Request $request){
+        $data = $request->input('TransactionDetail');
+        if(!(int)$data['Total']) return back()->withErrors('Anda Belum Memilih Isi Keranjang');
+        $request->session()->put('TransactionDetail',$data);
+        return redirect()->route('transaction.create');
     }
 
     public function show($transaction)
@@ -42,7 +51,7 @@ class TransactionController extends Controller
         Config::$serverKey = env("MIDTRANS_SERVER_KEY");
         Config::$isProduction = false;
 
-        $Request->validate(['item_details' => 'required']);
+        $validated = $Request->validate(['item_details' => 'required']);
         // $item_details = [
         //     [
         //         "id" => "item-001",
@@ -59,7 +68,6 @@ class TransactionController extends Controller
         //         "image_url" => fake("id_ID")->imageUrl(),  // Foto produk B
         //     ]
         // ];
-
         $params = array(
             'transaction_details' => array(
                 'order_id' => Ulid::generate(),
@@ -70,14 +78,13 @@ class TransactionController extends Controller
                 'email' => $Request->user()->email,
                 'phone' => $Request->user()->phone,
             ),
-            "item_details" => $Request->validated(),
+            "item_details" => $validated['item_details'],
             'custom_expiry' => array(
                 'start_time' => now()->toIso8601String(),
                 'duration' => 1,
                 "units" => "hours"
             ),
         );
-
         $SnapToken =  Snap::createTransaction($params);
         return redirect()->route('transaction.create')->with('success', $SnapToken);
     }

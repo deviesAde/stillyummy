@@ -10,6 +10,7 @@ import { ProductCardType } from "@/types/ProductCardType";
 import ButtonFooter from "./ButtonFooter";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import MakeTransactionPage from "@/services/MakeTransactionPage";
 
 export default function ProductModal({
     onClick,
@@ -29,8 +30,6 @@ export default function ProductModal({
             ? SetPurchaseAmount((prev) => prev + 1)
             : SetPurchaseAmount((prev) => prev - 1);
     };
-
-    // console.log(SubTotal)
 
     return (
         <div className="fixed flex-flex-col min-h-screen bg-black bg-opacity-50 z-50 w-full">
@@ -81,7 +80,28 @@ export default function ProductModal({
                     </div>
                 </CardContent>
                 <CardFooter className="space-x-5 border-t-2 pt-5">
-                    <ButtonFooter className="flex w-full gap-x-5"/>
+                    <ButtonFooter
+                        className="flex w-full gap-x-5"
+                        Action1={() => {}}
+                        Action2={() =>
+                            MakeTransactionPage({
+                                Total: SubTotal,
+                                items: [
+                                    {
+                                        id: Data.ID,
+                                        name: Data.Title,
+                                        price: Data.price,
+                                        ProductStock: Data.Stock as number,
+                                        price: Data.price,
+                                        ProductSubtotal: SubTotal,
+                                        quantity: PurchaseAmount,
+                                        ProductPhoto:
+                                            Data.Thubnail as string,
+                                    },
+                                ],
+                            })
+                        }
+                    />
                 </CardFooter>
             </Card>
         </div>

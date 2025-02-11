@@ -1,10 +1,11 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
-export default function TransactionCreate({ flash }) {
-    window.open(flash.success?.redirect_url,'_blank')
+export default function TransactionCreate({ flash,TransactionData }) {
     return (
         <Authenticated
             header={{ Parent: "Transaksi", Submenu: "Transaksi Baru" }}
-        ></Authenticated>
+        >
+            <h1>{`${TransactionData.Total}`}</h1>
+        </Authenticated>
     );
 }

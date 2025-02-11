@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/Components/ui/card";
 
 export default function Products() {
-    const [ModalUploadProduct, SetModalUploadProduct] = useState<boolean>(true);
+    const [ModalUploadProduct, SetModalUploadProduct] = useState<boolean>(false);
     return (
         <Authenticated
             header={{ Parent: "Merchant", Submenu: "Product List" }}

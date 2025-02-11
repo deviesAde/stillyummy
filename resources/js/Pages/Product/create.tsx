@@ -6,6 +6,7 @@ import { Button } from "@/Components/ui/button";
 import { useForm } from "@inertiajs/react";
 import { useRef } from "react";
 import { Plus } from "lucide-react";
+import MakeTransactionPage from "@/services/MakeTransactionPage";
 
 export default function CreateProductPage() {
     const { data, setData, post, errors, processing } = useForm({

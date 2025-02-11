@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
     })->middleware(MerchantAuthor::class);
 
     Route::resource('/transaction', TransactionController::class);
+    
+    Route::post('/transaction/create', [TransactionController::class, 'To_Create_Page'])->name('transaction.createpost');
 
     Route::get('/RiwayatTransaksi', [TransactionController::class, 'index_riwayat'])->name('transaction.riwayat');
 
