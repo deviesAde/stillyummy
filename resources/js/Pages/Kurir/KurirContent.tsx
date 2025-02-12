@@ -1,4 +1,5 @@
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+// import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import Map from "@/Components/Kurir/Map";
 import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
 import {
@@ -32,23 +33,10 @@ export default function KurirContentPage({ Data }: { Data: DataType }) {
         });
     }, []);
     const [OpsiDetail, SetOpsiDetail] = useState<boolean>(true);
-    console.log(coordinates);
     return (
         <div className="w-full bg-red-500 flex flex-col gap-y-5 relative">
-            <div className="aspect-square md:aspect-video w-full h-screen">
-                <APIProvider
-                    apiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY}
-                >
-                    <Map
-                        // gestureHandling={"greedy"}
-                        // draggable
-                        disableDefaultUI
-                        center={coordinates}
-                        zoom={19}
-                    >
-                        <Marker position={coordinates} />
-                    </Map>
-                </APIProvider>
+            <div className="aspect-square md:aspect-video w-full min-h-screen">
+                <Map />
             </div>
             <Card
                 className={cn(
@@ -61,8 +49,11 @@ export default function KurirContentPage({ Data }: { Data: DataType }) {
                     onClick={() => SetMinimize(!minimize)}
                 ></div>
                 <CardHeader>
-                    <CardTitle className="">
-                        Jumlah :
+                    <CardTitle className="text-sm md:text-xl font-light">
+                        Nomor Pesanan : {Data.id}
+                    </CardTitle>
+                    <CardTitle className={cn('',showDetail && 'text-xl')}>
+                        {!showDetail && "Jumlah : "}
                         {new Intl.NumberFormat("id-ID", {
                             style: "currency",
                             currency: "IDR",
@@ -70,13 +61,10 @@ export default function KurirContentPage({ Data }: { Data: DataType }) {
                             faker.number.float({ min: 1000.0, max: 200000 })
                         )}
                     </CardTitle>
-                    <CardTitle className="text-sm md:text-xl font-light">
-                        Nomor Pesanan : {Data.id}
-                    </CardTitle>
                 </CardHeader>
                 {showDetail && (
-                    <CardContent className="flex flex-col gap-y-5">
-                        <CardTitle>Detail Pengiriman</CardTitle>
+                    <CardContent className="flex flex-col gap-y-3">
+                        <CardTitle className="text-center text-xl">Detail Pengiriman</CardTitle>
                         <div className="w-full bg-gray-100 rounded-full flex flex-row p-1 shadow-sm">
                             <div
                                 className={cn(

@@ -86,6 +86,7 @@ export default function ProductModal({
                         Action2={() =>
                             MakeTransactionPage({
                                 Total: SubTotal,
+                                MerchantName: Data.Seller!,
                                 items: [
                                     {
                                         id: Data.ID,
@@ -95,8 +96,8 @@ export default function ProductModal({
                                         price: Data.price,
                                         ProductSubtotal: SubTotal,
                                         quantity: PurchaseAmount,
-                                        ProductPhoto:
-                                            Data.Thubnail as string,
+                                        ProductPhoto: Data.Thubnail as string,
+                                        ProductExpired: Data.ProductExpired,
                                     },
                                 ],
                             })

@@ -9,6 +9,7 @@ import {
 } from "../ui/table";
 
 import { Header } from "@/Pages/Product/CreateBatch";
+import BingImage from "./BingImage";
 
 export default function TableDemo({Data} : {Data:Header[]}) {
     console.log(Data);
@@ -19,9 +20,10 @@ export default function TableDemo({Data} : {Data:Header[]}) {
                 <TableRow>
                     <TableHead className="w-[100px] text-center">No</TableHead>
                     <TableHead>Product Name</TableHead>
+                    <TableHead>Product Image</TableHead>
                     <TableHead>Product Price</TableHead>
                     <TableHead>Stock</TableHead>
-                    <TableHead>ExpiredDate</TableHead>
+                    <TableHead>Expired Date</TableHead>
                     <TableHead className="text-center">Description</TableHead>
                 </TableRow>
             </TableHeader>
@@ -34,9 +36,12 @@ export default function TableDemo({Data} : {Data:Header[]}) {
                         <TableCell className="font-medium">
                             {invoice.ProductName}
                         </TableCell>
+                        <TableCell className="w-fit">
+                            <BingImage keyword = {invoice.ProductName}/>
+                        </TableCell>
                         <TableCell>{new Intl.NumberFormat('id-ID',{currency:'IDR', style: 'currency'}).format(invoice.ProductPrice)}</TableCell>
                         <TableCell className="text-center">{invoice.ProductStock}</TableCell>
-                        <TableCell>{invoice.ProductExpired}</TableCell>
+                        <TableCell>{invoice.ProductExpired.toLocaleDateString()}</TableCell>
                         <TableCell className="text-justify">
                             {invoice.ProductDescription}
                         </TableCell>

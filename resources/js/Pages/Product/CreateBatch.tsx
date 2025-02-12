@@ -6,13 +6,22 @@ import { Button } from "@/Components/ui/button";
 import Papa from "papaparse";
 import * as ExcelParser from "xlsx";
 import TableDemo from "@/Components/Product/TableBatchUpload";
+import { cn } from "@/lib/utils";
 
 export type Header = {
     ProductName: string;
     ProductPrice: number;
     ProductStock: number;
     ProductDescription: string;
-    ProductExpired: string;
+    ProductExpired: Date;
+};
+
+type error = {
+    ProductNameColumn: string;
+    ProductPriceColumn: string;
+    ProductDescriptionColumn: string;
+    ProductExpiredColumn: string;
+    ProductStockColumn: string;
 };
 
 export default function CreateBatchPage() {
@@ -23,6 +32,7 @@ export default function CreateBatchPage() {
     const HeaderProductExpired = useRef<HTMLInputElement>(null);
     const [File, SetFile] = useState<File>();
     const [ReadedFile, SetReadedFile] = useState<Header[]>();
+    const [error, setError] = useState<error | null>();
 
     console.log(ReadedFile);
     const Reader = () => {
@@ -56,16 +66,20 @@ export default function CreateBatchPage() {
                     ParseResult.Sheets[sheetName]
                 );
                 console.log(data);
-                const resultvalidation:Header[] = data.map((item: any) => ({
+                const resultvalidation: Header[] = data.map((item: any) => ({
                     ProductName:
                         item[HeaderProductName.current?.value as string],
-                    ProductPrice:
-                        parseFloat(item[HeaderProductPrice.current?.value as string]),
-                    ProductStock:
-                        parseInt(item[HeaderProductStock.current?.value as string]),
-                    ProductExpired:
-                        item[HeaderProductExpired.current?.value as string],
-                    ProductDescription : item[HeaderProductDescription.current?.value as string]
+                    ProductPrice: parseFloat(
+                        item[HeaderProductPrice.current?.value as string]
+                    ),
+                    ProductStock: parseInt(
+                        item[HeaderProductStock.current?.value as string]
+                    ),
+                    ProductExpired: new Date(
+                        item[HeaderProductExpired.current?.value as string]
+                    ),
+                    ProductDescription:
+                        item[HeaderProductDescription.current?.value as string],
                 }));
                 console.log(resultvalidation);
                 SetReadedFile(resultvalidation);
@@ -74,33 +88,36 @@ export default function CreateBatchPage() {
                 Papa.parse(e.target?.result as string, {
                     header: true,
                     complete: (result) => {
-                        const resultvalidation:Header[] = result.data.map(
+                        const resultvalidation: Header[] = result.data.map(
                             (item: any) => ({
                                 ProductName:
                                     item[
                                         HeaderProductName.current
                                             ?.value as string
                                     ],
-                                ProductPrice:
-                                    parseFloat(item[
+                                ProductPrice: parseFloat(
+                                    item[
                                         HeaderProductPrice.current
                                             ?.value as string
-                                    ]),
-                                ProductStock:
-                                    parseInt(item[
+                                    ]
+                                ),
+                                ProductStock: parseInt(
+                                    item[
                                         HeaderProductStock.current
                                             ?.value as string
-                                    ]),
+                                    ]
+                                ),
                                 ProductDescription:
                                     item[
                                         HeaderProductDescription.current
                                             ?.value as string
                                     ],
-                                ProductExpired:
+                                ProductExpired: new Date(
                                     item[
                                         HeaderProductExpired.current
                                             ?.value as string
-                                    ],
+                                    ]
+                                ),
                             })
                         );
                         console.log(resultvalidation);
@@ -139,12 +156,12 @@ export default function CreateBatchPage() {
                     ref={HeaderProductStock}
                 />
                 <Input
-                    placeholder="Kolom Deskripsi Produk"
-                    ref={HeaderProductDescription}
-                />
-                <Input
                     placeholder="Kolom Expired Produk"
                     ref={HeaderProductExpired}
+                />
+                <Input
+                    placeholder="Kolom Deskripsi Produk"
+                    ref={HeaderProductDescription}
                 />
             </div>
             <Input
@@ -152,8 +169,13 @@ export default function CreateBatchPage() {
                 accept=".csv,.xlsx"
                 onChange={(e) => SetFile(e.target.files?.[0])}
             />
-            <Button onClick={Reader}>Load File</Button>
-            {(ReadedFile && File) && <TableDemo Data={ReadedFile}/>}
+            <div className="flex flex-row gap-x-1.5">
+                <Button onClick={Reader} className={cn("flex-1",ReadedFile && File && "bg-red-600 hover:bg-red-700")}>
+                    {ReadedFile && File ? "Reload File" : "Load File"}
+                </Button>
+                {ReadedFile && File && <Button className="flex-1 bg-green-600 hover:bg-green-700">Submit</Button>}
+            </div>
+            {ReadedFile && File && <TableDemo Data={ReadedFile} />}
         </Authenticated>
     );
 }

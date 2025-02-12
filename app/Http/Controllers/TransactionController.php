@@ -24,7 +24,6 @@ class TransactionController extends Controller
     public function create(Request $Request)
     {
         $Data = $Request->session()->get('TransactionDetail');
-        dd($Request->session());
         if(!$Data) abort(419);
         return Inertia::render('Transaction/TransactionCreate', ['TransactionData' => $Data]);
     }
