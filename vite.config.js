@@ -13,7 +13,7 @@ export default defineConfig({
     server: {
         // ... other server settings
         cors: {
-            origin: 'http://127.0.0.1:8000', // Allow traffic from your main server
+            origin: ['http://127.0.0.1:8000','https://78fb-66-96-225-114.ngrok-free.app'], // Allow traffic from your main server
             // If your server needs more complex cors settings, you can set it here.
         },
     },

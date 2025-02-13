@@ -27,6 +27,9 @@ export default function ProductPage() {
             max: 100000,
             fractionDigits: 2,
         }),
+        ProductExpired : faker.date.future(),
+        Seller : faker.commerce.department(),
+        SellerPorfile : faker.image.avatar(),
         SellerDescription: faker.lorem.paragraph(),
         Stock: faker.number.int({ min: 0, max: 10 }),
     };

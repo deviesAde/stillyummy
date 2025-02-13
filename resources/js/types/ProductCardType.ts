@@ -8,5 +8,6 @@ export interface ProductCardType{
     Seller? : string;
     SellerPorfile? : string; 
     SellerDescription? : string;
+    ProductExpired : Date;
     Stock?: number;
 }

@@ -11,6 +11,7 @@
         "@inertiajs/react": "^2.0.0",
         "@tailwindcss/forms": "^0.5.3",
         "@types/node": "^18.13.0",
+        "@types/papaparse": "^5.3.15",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.10",
         "@vitejs/plugin-react": "^4.2.0",
@@ -35,11 +36,17 @@
         "@radix-ui/react-separator": "^1.1.1",
         "@radix-ui/react-slot": "^1.1.1",
         "@radix-ui/react-tooltip": "^1.1.6",
+        "@react-google-maps/api": "^2.20.6",
+        "@vis.gl/react-google-maps": "^1.5.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "csvtojson": "^2.0.10",
         "embla-carousel-react": "^8.5.2",
+        "fs": "^0.0.1-security",
         "lucide-react": "^0.473.0",
+        "papaparse": "^5.5.2",
         "tailwind-merge": "^2.6.0",
-        "tailwindcss-animate": "^1.0.7"
+        "tailwindcss-animate": "^1.0.7",
+        "xlsx": "^0.18.5"
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\KurirController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -48,12 +49,16 @@ Route::middleware('auth')->group(function () {
     })->middleware(MerchantAuthor::class);
 
     Route::resource('/transaction', TransactionController::class);
+    
+    Route::post('/transaction/create', [TransactionController::class, 'To_Create_Page'])->name('transaction.createpost');
 
     Route::get('/RiwayatTransaksi', [TransactionController::class, 'index_riwayat'])->name('transaction.riwayat');
 
     Route::middleware(MerchantAuthor::class)->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+            Route::get('/createbatch', [ProductController::class, 'createbatch'])->name('product.createbatch');
+            Route::post('/', [ProductController::class, 'store'])->name('product.store');
         });
     });
 
@@ -66,5 +71,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/product/{id}', [ProductController::class, 'GetProduct'])->name('product.index');
+
+Route::resource('Kurir', KurirController::class);
 
 require __DIR__ . '/auth.php';
