@@ -27,6 +27,7 @@ const DummyProducts: ProductCardType[] = Array.from({ length: 100 }).map(
                 max: 500000,
                 fractionDigits:2
             }),
+            ProductExpired: faker.date.future().toISOString(),
         };
         return DummyProduct;
     }
