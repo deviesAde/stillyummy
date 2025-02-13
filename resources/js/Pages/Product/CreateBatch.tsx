@@ -16,14 +16,6 @@ export type Header = {
     ProductExpired: Date;
 };
 
-type error = {
-    ProductNameColumn: string;
-    ProductPriceColumn: string;
-    ProductDescriptionColumn: string;
-    ProductExpiredColumn: string;
-    ProductStockColumn: string;
-};
-
 export default function CreateBatchPage() {
     const HeaderProductName = useRef<HTMLInputElement>(null);
     const HeaderProductPrice = useRef<HTMLInputElement>(null);
@@ -32,8 +24,6 @@ export default function CreateBatchPage() {
     const HeaderProductExpired = useRef<HTMLInputElement>(null);
     const [File, SetFile] = useState<File>();
     const [ReadedFile, SetReadedFile] = useState<Header[]>();
-    const [error, setError] = useState<error | null>();
-
     console.log(ReadedFile);
     const Reader = () => {
         if (!File) return;
