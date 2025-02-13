@@ -48,8 +48,6 @@ export default function CreateBatchPage() {
                 const ParseResult = ExcelParser.read(e.target?.result, {
                     type: "array",
                 });
-                console.log(ParseResult);
-
                 // Optional: Convert to JSON or do further processing here
                 const sheetName = ParseResult.SheetNames[0];
                 const data = ExcelParser.utils.sheet_to_json(

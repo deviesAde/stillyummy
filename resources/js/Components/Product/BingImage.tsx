@@ -2,20 +2,23 @@ import { Spinner } from "../ui/spinner";
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import axios from "axios";
 
 export default function BingImage({ keyword }: { keyword: string }) {
     if (!keyword) return null;
     const generateImage = () => {
         setLoading(true)
-        const idleTime = Math.random() * 10000;
-        setTimeout(() => {
-            setImage(faker.image.urlLoremFlickr({ width: 1920, height: 1080 }));
-            setLoading(false)
-        }, idleTime);
+        axios.get(`https://api.unsplash.com/search/photos?query=${keyword}&client_id=${import.meta.env.VITE_UNSPLASH_KEY}&per_page=1&page=1`).then((respons)=>{console.log(respons.data.result[0].urls.raw);setImage(respons.data.result[0].urls.raw)}).catch((error) => {console.log(error)}).finally(()=>setLoading(false))
+        // const idleTime = Math.random() * 10000;
+        // setTimeout(() => {
+        //     setImage(faker.image.urlLoremFlickr({ width: 1920, height: 1080 }));
+        // }, idleTime);
     }
+
     useEffect(() => {
         generateImage()
     }, []);
+
     const [image, setImage] = useState<string>();
     const [isLoading,setLoading] = useState<boolean>(true)
     return (
