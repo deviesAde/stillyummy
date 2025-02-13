@@ -15,6 +15,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\DashboardController;
+
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -49,17 +51,15 @@ Route::middleware('auth')->group(function () {
     })->middleware(MerchantAuthor::class);
 
     Route::resource('/transaction', TransactionController::class);
-    
     Route::post('/transaction/create', [TransactionController::class, 'To_Create_Page'])->name('transaction.createpost');
-
     Route::get('/RiwayatTransaksi', [TransactionController::class, 'index_riwayat'])->name('transaction.riwayat');
-
     Route::middleware(MerchantAuthor::class)->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/create', [ProductController::class, 'create'])->name('product.create');
             Route::get('/createbatch', [ProductController::class, 'createbatch'])->name('product.createbatch');
             Route::post('/', [ProductController::class, 'store'])->name('product.store');
         });
+
     });
 
 
@@ -68,7 +68,21 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [CartController::class, 'index'])->name('cart.index');
         });
     });
+
+    
+     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])
+        ->name('admin.dashboard')
+        ->middleware(AdminAuthor::class);
+
+    Route::get('/merchant/dashboard', [DashboardController::class, 'merchant'])
+        ->name('merchant.dashboard')
+        ->middleware(MerchantAuthor::class);
+
+    Route::get('/user/dashboard', [DashboardController::class, 'user'])
+        ->name('user.dashboard')
+        ->middleware(UserAuthor::class);
 });
+
 
 Route::get('/product/{id}', [ProductController::class, 'GetProduct'])->name('product.index');
 

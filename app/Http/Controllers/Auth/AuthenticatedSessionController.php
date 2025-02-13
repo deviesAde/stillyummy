@@ -33,12 +33,27 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+       return $this->redirectToBasedOnRole();
     }
 
     /**
      * Destroy an authenticated session.
      */
+
+        protected function redirectToBasedOnRole(): RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'Admin') {
+            return redirect()->intended(route('admin.dashboard'));
+        } elseif ($user->role === 'Merchant') {
+            return redirect()->intended(route('merchant.dashboard'));
+        } elseif ($user->role === 'User') {
+            return redirect()->intended(route('user.dashboard'));
+        }
+
+        return redirect()->intended(route('dashboard'));
+    }
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
