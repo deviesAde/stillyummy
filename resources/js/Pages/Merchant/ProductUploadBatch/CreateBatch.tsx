@@ -1,4 +1,4 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import MerchantLayout from "../../../Layouts/Merchant/MerchantLayout"
 import { Input } from "@/Components/ui/input";
 import { useState } from "react";
 import { useRef } from "react";
@@ -126,7 +126,7 @@ export default function CreateBatchPage() {
         }
     };
     return (
-        <Authenticated
+        <MerchantLayout
             header={{ Parent: "Product", Submenu: "Tambah Produk Batch" }}
             className="flex flex-col gap-y-5"
         >
@@ -164,6 +164,6 @@ export default function CreateBatchPage() {
                 {ReadedFile && File && <Button className="flex-1 bg-green-600 hover:bg-green-700">Submit</Button>}
             </div>
             {ReadedFile && File && <TableDemo Data={ReadedFile} />}
-        </Authenticated>
+        </MerchantLayout>
     );
 }

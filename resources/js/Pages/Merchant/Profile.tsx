@@ -1,4 +1,4 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import MerchantLayout from '../../Layouts/Merchant/MerchantLayout'
 import {
     Card,
     CardHeader,
@@ -27,7 +27,7 @@ export default function Merchant() {
     console.log(coordinate)
 
     return (
-        <Authenticated header={{ Parent: "Merchant", Submenu: "Profile" }} className="m-0">
+        <MerchantLayout header={{ Parent: "Merchant", Submenu: "Profile" }} className="m-0">
             <Card className="p-0 flex flex-col-reverse md:flex-row">
                 <div className="md:w-2/3 rounded-r-none">
                     <CardHeader>
@@ -59,6 +59,6 @@ export default function Merchant() {
                     </APIProvider>
                 </Card>
             </Card>
-        </Authenticated>
+        </MerchantLayout>
     );
 }

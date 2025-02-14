@@ -13,9 +13,9 @@ class AdminAuthor
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next) : Response
     {
-        if ($request->user()->role() === 'admin') {
+        if ($request->user()->role === 'Admin') {
             return $next($request);
         }
         abort(401);

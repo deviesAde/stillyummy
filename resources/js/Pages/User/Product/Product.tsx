@@ -1,5 +1,5 @@
 import { ProductCardType } from "@/types/ProductCardType";
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import Layout from "@/Layouts/User/UserLayout";
 import { faker } from "@faker-js/faker";
 import CarouselProduct from "@/Components/Product/Carousel";
 import { useState } from "react";
@@ -10,8 +10,6 @@ import ProductDescription from "@/Components/Product/ProductDescription";
 import StockCard from "@/Components/Product/StockCard";
 import { User } from "@/types";
 import { usePage } from "@inertiajs/react";
-import TakedownProduct from "@/Components/Product/TakedownModal";
-import CardTakedown from "@/Components/Product/CardTakeDown";
 
 export default function ProductPage() {
     faker.seed(1);
@@ -27,18 +25,17 @@ export default function ProductPage() {
             max: 100000,
             fractionDigits: 2,
         }),
-        ProductExpired : faker.date.future(),
-        Seller : faker.commerce.department(),
-        SellerPorfile : faker.image.avatar(),
+        ProductExpired: faker.date.future(),
+        Seller: faker.commerce.department(),
+        SellerPorfile: faker.image.avatar(),
         SellerDescription: faker.lorem.paragraph(),
         Stock: faker.number.int({ min: 0, max: 10 }),
     };
     const [Modal, SetModal] = useState(false);
-    const [ModalAdmin, SetModalAdmin] = useState(false);
     const SessionInfo: User = usePage().props.auth.user;
     return (
         <div className="flex">
-            <Authenticated
+            <Layout
                 header={{ Parent: "Product" }}
                 className="flex xl:grid-cols-3 gap-x-10 gap-y-5"
             >
@@ -48,45 +45,26 @@ export default function ProductPage() {
                 </div>
 
                 <div className="md:w-1/3 hidden md:block">
-                    {SessionInfo?.role !== "Admin" ? (
-                        <StockCard Product={Product} />
-                    ) : <CardTakedown onClick={SetModalAdmin}/>}
+                    <StockCard Product={Product} />
                 </div>
-
-                {SessionInfo?.role !== "Admin" && (
-                    <>
-                        {Product.Stock ? (
-                            <ButtonFooter
-                                className="flex fixed bottom-0 pb-10 w-full pr-10 md:hidden bg-white gap-x-5 mt-5"
-                                Action1={() => SetModal(true)}
-                                Action2={() => SetModal(true)}
-                            />
-                        ) : (
-                            <div className="fixed bottom-0 pb-10 pr-10 w-full md:hidden">
-                                <Button
-                                    disabled
-                                    className="w-full bg-white text-black border-2 border-black"
-                                >
-                                    Stock Habis
-                                </Button>
-                            </div>
-                        )}
-                    </>
-                )}
-                {SessionInfo?.role === "Admin" && (
+                {Product.Stock ? (
+                    <ButtonFooter
+                        className="flex fixed bottom-0 pb-10 w-full pr-10 md:hidden bg-white gap-x-5 mt-5"
+                        Action1={() => SetModal(true)}
+                        Action2={() => SetModal(true)}
+                    />
+                ) : (
                     <div className="fixed bottom-0 pb-10 pr-10 w-full md:hidden">
                         <Button
-                            className="w-full"
-                            onClick={() => SetModalAdmin(true)}
-                            disabled={ModalAdmin}
+                            disabled
+                            className="w-full bg-white text-black border-2 border-black"
                         >
-                            Takedown Product
+                            Stock Habis
                         </Button>
                     </div>
                 )}
-            </Authenticated>
+            </Layout>
             {Modal && <ProductModal Data={Product} onClick={SetModal} />}
-            {ModalAdmin && <TakedownProduct onClick={SetModalAdmin} />}
         </div>
     );
 }

@@ -1,11 +1,10 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import Layout from "@/Layouts/User/UserLayout";
 import { Button } from "@/Components/ui/button";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { faker } from "@faker-js/faker/locale/id_ID";
 import { CartItemTypes } from "@/types/CartItemType";
 import CardCart from "@/Components/Cart/Card";
 import { Card } from "@/Components/ui/card";
-import flashtype from "@/types/flashType";
 import CreateTransactionType from "@/types/CreateTransactionType";
 import MakeTransactionPage from "@/services/MakeTransactionPage";
 
@@ -32,22 +31,14 @@ const CartItems = Array.from({ length: 5 }).map((item, index) => {
     return merchant;
 });
 
-export default function Cart({ errors }: { errors: { item_details: string } }) {
-    const [cartItems, SetCartItems] = useState<CreateTransactionType>({
-        Total: 0,
-        items: [],
-    });
+export default function Cart() {
+    const [cartItems, SetCartItems] = useState<CreateTransactionType>();
     console.log();
     return (
-        <Authenticated
+        <Layout
             header={{ Parent: "Keranjang" }}
             className="flex flex-col gap-y-4"
         >
-            {Object.values(errors)[0] && (
-                <Card className="bg-red-100 p-10 font-bold border-red-600">
-                    {Object.values(errors)[0]}
-                </Card>
-            )}
             <Card className="hidden sticky top-20 md:flex justify-end py-2 font-semibold">
                 <div className="flex w-3/4 text-center">
                     <h1 className="flex-1">Product</h1>
@@ -65,10 +56,10 @@ export default function Cart({ errors }: { errors: { item_details: string } }) {
                     {new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR",
-                    }).format(cartItems.Total)}
+                    }).format(cartItems?.Total ?? 0)}
                 </h1>
-                <Button onClick={()=>MakeTransactionPage(cartItems)}>Bayar Sekarang</Button>
+                <Button disabled={!cartItems} onClick={()=>cartItems && MakeTransactionPage(cartItems)}>Bayar Sekarang</Button>
             </div>
-        </Authenticated>
+        </Layout>
     );
 }

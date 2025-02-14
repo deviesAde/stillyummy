@@ -1,4 +1,4 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import MerchantLayout from "../../../Layouts/Merchant/MerchantLayout"
 import { Button } from "@/Components/ui/button";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardFooter } from "@/Components/ui/card";
 export default function Products() {
     const [ModalUploadProduct, SetModalUploadProduct] = useState<boolean>(false);
     return (
-        <Authenticated
+        <MerchantLayout
             header={{ Parent: "Merchant", Submenu: "Product List" }}
             className="gap-y-5 flex flex-col"
         >
@@ -27,13 +27,13 @@ export default function Products() {
                     <CardFooter className="flex gap-x-2">
                         <Button
                             className="flex-1"
-                            onClick={() => router.get(route("product.create"))}
+                            onClick={() => router.get(route("merchant.product.create"))}
                         >
                             Satuan
                         </Button>
                         <Button
                             className="flex-1"
-                            onClick={() => router.get(route("product.createbatch"))}
+                            onClick={() => router.get(route("merchant.product.createbatch"))}
                         >
                             Batch
                         </Button>
@@ -47,6 +47,6 @@ export default function Products() {
                 Tambah Product
             </Button>
             <div className="py-1 bg-black"></div>
-        </Authenticated>
+        </MerchantLayout>
     );
 }

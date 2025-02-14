@@ -1,10 +1,10 @@
-import React from "react";
+import Layout from "@/Layouts/Admin/AdminLayout";
 
 const AdminDashboard = () => {
     return (
-        <div>
+        <Layout header={{ Parent:'Dashboard' }}>
             <h1>Admin Dashboard</h1>
-        </div>
+        </Layout>
     );
 };
 

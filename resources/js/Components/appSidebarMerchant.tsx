@@ -2,10 +2,6 @@ import * as React from "react";
 import {
     Wallet2,
     Bot,
-    Frame,
-    Map,
-    PieChart,
-    Settings2,
     User2,
     Store,
     LayoutDashboard,
@@ -19,7 +15,6 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
-    SidebarRail,
 } from "@/components/ui/sidebar";
 
 import { faker } from "@faker-js/faker";
@@ -30,11 +25,6 @@ import { router } from "@inertiajs/react";
 
 // This is sample data.
 const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
     nav: {
         Dashboard: {
             name: "Dasboard",
@@ -61,27 +51,9 @@ const data = {
             url: route("wallet.index"),
             icon: Wallet2,
         },
-        Cart: {
-            title: "Models",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
-            ],
-        },
-        Merchant_Setting: {
+Merchant_Setting: {
             title: "Merchant",
+            url: "#",
             icon: Store,
             items: [
                 {
@@ -90,12 +62,12 @@ const data = {
                 },
                 {
                     title: "Products",
-                    url: route('merchant.products'),
+                    url: route("merchant.products"),
                 },
                 {
                     title: "Analytic Transaction",
-                    url: route('merchant.analytic'),
-                }
+                    url: route("merchant.analytic"),
+                },
             ],
         },
         Transaction: {
@@ -105,14 +77,15 @@ const data = {
             items: [
                 {
                     title: "Sedang Berlangsung",
-                    url: route('transaction.index'),
+                    url: route("merchant.transaction.index"),
                 },
                 {
                     title: "Selesai",
-                    url: route('transaction.riwayat'),
-                }
+                    url: route("merchant.transaction.riwayat"),
+                },
             ],
         },
+
         Profile: {
             title: "Profile",
             url: "#",
@@ -131,7 +104,7 @@ const data = {
     },
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const UserSession: User = usePage().props.auth.user;
     return (
         <Sidebar className="" collapsible="icon" {...props}>
@@ -151,15 +124,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
             </SidebarHeader>
             <SidebarContent className="flex flex-col py-5">
-                {UserSession?.role=== "Merchant" && (
-                    <NavMain items={[data.nav.Merchant_Setting]} />
-                )}
-                {UserSession?.role !== "Merchant" && <NavProjects projects={[data.nav.Dashboard]} />}
+                <NavMain items={[data.nav.Merchant_Setting]} />
                 <NavMain items={[data.nav.Transaction]} />
-                {UserSession?.role !== "Admin" && <NavProjects projects={[data.nav.Wallet]} />}
+                <NavProjects projects={[data.nav.Wallet]} />
                 <NavMain items={[data.nav.Profile]} />
             </SidebarContent>
-
             <SidebarFooter className="mb-2">
                 {UserSession ? (
                     <div className="flex items-center space-x-4 justify-starts mr-2">

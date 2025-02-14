@@ -1,9 +1,9 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import Layout from "@/Layouts/User/UserLayout";
 
 export default function TransactionEdit({ ID }: { ID: string }) {
     return (
-        <Authenticated
+        <Layout
             header={{ Parent: "Edit Transaski", Submenu: ID }}
-        ></Authenticated>
+        ></Layout>
     );
 }

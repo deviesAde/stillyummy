@@ -7,26 +7,38 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function index()
+    public static function GetProductList()
     {
         $Products = [];
-        return Inertia::render('Product', ["Products" => $Products]);
+        return $Products;
     }
 
-    public function GetProduct($id)
+    public function GetProductForUser($id)
     {
         $Product = [];
-        return Inertia::render('Product/Product', ["Product" => $Product]);
+        return Inertia::render('User/Product/Product', ["Product" => $Product]);
+    }
+
+    public function GetProductForAdmin($id)
+    {
+        $Product = [];
+        return Inertia::render('Admin/Product/Product', ["Product" => $Product]);
+    }
+
+    public function GetProductForMerchant($id)
+    {
+        $Product = [];
+        return Inertia::render('Merchant/ProductPreview/Product', ["Product" => $Product]);
     }
 
     public function create(Request $request)
     {
-        return Inertia::render('Product/Create');
+        return Inertia::render('Merchant/ProductUpload/Create');
     }
 
     public function createbatch(Request $request)
     {
-        return Inertia::render('Product/CreateBatch');
+        return Inertia::render('Merchant/ProductUploadBatch/CreateBatch');
     }
 
     public function store(Request $request)

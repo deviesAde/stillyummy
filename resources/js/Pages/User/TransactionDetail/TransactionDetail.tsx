@@ -1,5 +1,5 @@
 import { Button } from "@/Components/ui/button";
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import Layout from "@/Layouts/User/UserLayout";
 import { useEffect } from "react";
 Button;
 
@@ -21,11 +21,12 @@ export default function TransactionDetail({ ID }: { ID: string }) {
     }, []);
 
     function OpenSnapPay() {
-        window.snap.pay("c7ead6bc-7b77-4566-98f3-ee66ff26714a");
+        const screen:any = window
+        screen.snap.pay("c7ead6bc-7b77-4566-98f3-ee66ff26714a");
     }
     return (
-        <Authenticated header={{ Parent: "Detail Transaski", Submenu: ID }}>
+        <Layout header={{ Parent: "Detail Transaski", Submenu: ID }}>
             <Button onClick={OpenSnapPay}>Show</Button>
-        </Authenticated>
+        </Layout>
     );
 }

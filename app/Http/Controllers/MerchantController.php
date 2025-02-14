@@ -14,10 +14,10 @@ class MerchantController extends Controller
 
     public function index_products()
     {
-        return Inertia::render('Merchant/Products');
+        return Inertia::render('Merchant/ProductList/Products');
     }
     public function index_analytic()
     {
-        return Inertia::render('Merchant/Analytic');
+        return Inertia::render('Merchant/Analytic/Analytic');
     }
 }

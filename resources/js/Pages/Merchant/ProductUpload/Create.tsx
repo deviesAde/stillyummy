@@ -1,4 +1,4 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import MerchantLayout from "../../../Layouts/Merchant/MerchantLayout"
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Textarea } from "@/Components/ui/textarea";
@@ -6,7 +6,6 @@ import { Button } from "@/Components/ui/button";
 import { useForm } from "@inertiajs/react";
 import { useRef } from "react";
 import { Plus } from "lucide-react";
-import MakeTransactionPage from "@/services/MakeTransactionPage";
 
 export default function CreateProductPage() {
     const { data, setData, post, errors, processing } = useForm({
@@ -19,7 +18,7 @@ export default function CreateProductPage() {
     const FileUpload = useRef(null);
     console.log(errors);
     return (
-        <Authenticated
+        <MerchantLayout
             header={{ Parent: "Product", Submenu: "Tambah Product" }}
             className="flex flex-col gap-y-10"
         >
@@ -47,10 +46,7 @@ export default function CreateProductPage() {
                         value={data.ProductPrice ?? ""}
                         onChange={(e) =>
                             e.target.value
-                                ? setData(
-                                      "ProductPrice",
-                                      parseFloat(e.target.value)
-                                  )
+                                ? setData("ProductPrice", parseFloat(e.target.value))
                                 : setData("ProductPrice", null)
                         }
                     />
@@ -69,10 +65,7 @@ export default function CreateProductPage() {
                         value={data.ProductStock ?? ""}
                         onChange={(e) =>
                             e.target.value
-                                ? setData(
-                                      "ProductStock",
-                                      parseFloat(e.target.value)
-                                  )
+                                ? setData("ProductStock",parseFloat(e.target.value))
                                 : setData("ProductStock", null)
                         }
                     />
@@ -198,6 +191,6 @@ export default function CreateProductPage() {
                     </Button>
                 </div>
             </div>
-        </Authenticated>
+        </MerchantLayout>
     );
 }

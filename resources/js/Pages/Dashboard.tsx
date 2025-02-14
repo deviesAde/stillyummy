@@ -25,9 +25,9 @@ const DummyProducts: ProductCardType[] = Array.from({ length: 100 }).map(
             price: faker.number.float({
                 min: 10000,
                 max: 500000,
-                fractionDigits:2
+                fractionDigits: 2,
             }),
-            ProductExpired: faker.date.future().toISOString(),
+            ProductExpired: faker.date.future(),
         };
         return DummyProduct;
     }
@@ -50,14 +50,30 @@ export default function Page() {
             header={{ Parent: "Dashboard" }}
             className="flex flex-col space-y-5"
         >
-            <CarouselDashboard />
+            <div className="relative">
+                <img
+                    src={faker.image.urlLoremFlickr({
+                        width: 1920,
+                        height: 1080,
+                    })}
+                    alt="banner"
+                    className="max-h-80 aspect-video object-fill w-full"
+                />
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-20 w-full h-full flex justify-center">
+                    <div className="my-auto flex flex-col gap-y-5">
+                        <h1 className="font-extrabold text-4xl text-center">Welcome to Still Yummy</h1>
+                        <h1 className="font-medium text-xl">Menyediakan Makanan dan Minuman dengan Harga Terjangkau</h1>
+                    </div>
+                </div>
+            </div>
+            {/* <CarouselDashboard /> */}
             <div className="sticky top-14 pb-5 flex flex-col gap-y-5 bg-white z-50">
                 <TextInput
                     placeholder="Search"
                     onKeyDown={(e) =>
                         e.keyCode === 13 && HandleSearch(e.target.value)
                     }
-            />
+                />
                 {/* <div className="flex space-x-1 w-1/2 ml-auto">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">

@@ -10,22 +10,22 @@ use Symfony\Component\Uid\Ulid;
 
 use function Laravel\Prompts\error;
 
-class TransactionController extends Controller
+class TransactionUserController extends Controller
 {
     public function index_riwayat()
     {
-        return Inertia::render('Transaction/Finish');
+        return Inertia::render('User/TransactionFinish/Finish');
     }
     public function index(Request $Request)
     {
-        return Inertia::render('Transaction/OnProcess');
+        return Inertia::render('User/TransactionOngoing/OnProcess');
     }
 
     public function create(Request $Request)
     {
         $Data = $Request->session()->get('TransactionDetail');
         if(!$Data) abort(419);
-        return Inertia::render('Transaction/TransactionCreate', ['TransactionData' => $Data]);
+        return Inertia::render('User/TransactionCreate/TransactionCreate', ['TransactionData' => $Data]);
     }
 
     public function To_Create_Page(Request $request){
@@ -37,12 +37,12 @@ class TransactionController extends Controller
 
     public function show($transaction)
     {
-        return Inertia::render('Transaction/TransactionDetail', ["ID" => $transaction]);
+        return Inertia::render('User/TransactionDetail/TransactionDetail', ["ID" => $transaction]);
     }
 
     public function edit($transaction)
     {
-        return Inertia::render('Transaction/TransactionEdit', ["ID" => $transaction]);
+        return Inertia::render('User/TransactionEdit/TransactionEdit', ["ID" => $transaction]);
     }
 
     public function store(Request $Request)

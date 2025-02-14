@@ -1,13 +1,7 @@
 import * as React from "react";
 import {
     Wallet2,
-    Bot,
-    Frame,
-    Map,
-    PieChart,
-    Settings2,
     User2,
-    Store,
     LayoutDashboard,
     PackageCheckIcon,
 } from "lucide-react";
@@ -19,7 +13,6 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
-    SidebarRail,
 } from "@/components/ui/sidebar";
 
 import { faker } from "@faker-js/faker";
@@ -30,15 +23,10 @@ import { router } from "@inertiajs/react";
 
 // This is sample data.
 const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
     nav: {
         Dashboard: {
             name: "Dasboard",
-            url: route("dashboard"),
+            url: route("admin.dashboard"),
             icon: LayoutDashboard,
             isActive: true,
             items: [
@@ -61,43 +49,6 @@ const data = {
             url: route("wallet.index"),
             icon: Wallet2,
         },
-        Cart: {
-            title: "Models",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
-            ],
-        },
-        Merchant_Setting: {
-            title: "Merchant",
-            icon: Store,
-            items: [
-                {
-                    title: "Merchant Profile",
-                    url: route("merchant.index"),
-                },
-                {
-                    title: "Products",
-                    url: route('merchant.products'),
-                },
-                {
-                    title: "Analytic Transaction",
-                    url: route('merchant.analytic'),
-                }
-            ],
-        },
         Transaction: {
             title: "Transaksi",
             url: "#",
@@ -105,12 +56,12 @@ const data = {
             items: [
                 {
                     title: "Sedang Berlangsung",
-                    url: route('transaction.index'),
+                    url: route("transaction.index"),
                 },
                 {
                     title: "Selesai",
-                    url: route('transaction.riwayat'),
-                }
+                    url: route("transaction.riwayat"),
+                },
             ],
         },
         Profile: {
@@ -131,7 +82,7 @@ const data = {
     },
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const UserSession: User = usePage().props.auth.user;
     return (
         <Sidebar className="" collapsible="icon" {...props}>
@@ -151,12 +102,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
             </SidebarHeader>
             <SidebarContent className="flex flex-col py-5">
-                {UserSession?.role=== "Merchant" && (
-                    <NavMain items={[data.nav.Merchant_Setting]} />
-                )}
-                {UserSession?.role !== "Merchant" && <NavProjects projects={[data.nav.Dashboard]} />}
-                <NavMain items={[data.nav.Transaction]} />
-                {UserSession?.role !== "Admin" && <NavProjects projects={[data.nav.Wallet]} />}
+                <NavProjects projects={[data.nav.Dashboard]} />
+                {/* <NavMain items={[data.nav.Transaction]} /> */}
                 <NavMain items={[data.nav.Profile]} />
             </SidebarContent>
 
