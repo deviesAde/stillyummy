@@ -13,6 +13,7 @@ Route::middleware(['auth', UserAuthor::class])->group(function () {
 
     Route::prefix('/cart')->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
+        Route::post('create',[CartController::class,'create'])->name('cart.create');
     });
     Route::get('/product/{id}', [ProductController::class, 'GetProductForUser'])->name('product.index');
 });

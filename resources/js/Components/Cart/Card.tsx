@@ -14,7 +14,9 @@ function CardItems({
 }: {
     item: MerchantProductCartType;
     SetStock: (
-        params: (prev: MerchantProductCartType[]) => MerchantProductCartType[] | MerchantProductCartType[]
+        params: (
+            prev: MerchantProductCartType[]
+        ) => MerchantProductCartType[] | MerchantProductCartType[]
     ) => void;
 }) {
     const [stock, setStock] = useState(item.quantity);
@@ -96,14 +98,18 @@ export default function CardCart({
     const [MerchantProduct, SetMerchantProduct] = useState<
         MerchantProductCartType[]
     >(Data.MerchantProduct);
-    const checkbox = useRef(null);
+    const checkbox = useRef<HTMLInputElement>(null);
 
     function Calculate() {
         let result = 0;
         MerchantProduct.forEach((items) => {
             result += items.ProductSubtotal ?? 0;
         });
-        SetItem({ Total: result, items: MerchantProduct });
+        SetItem({
+            Total: result,
+            items: MerchantProduct,
+            MerchantName: Data.MerchantName,
+        });
     }
 
     useEffect(() => {

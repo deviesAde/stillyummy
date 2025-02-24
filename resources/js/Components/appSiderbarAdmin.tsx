@@ -84,7 +84,6 @@ const data = {
 
 export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const UserSession: User = usePage().props.auth.user;
-    return (
         <Sidebar className="" collapsible="icon" {...props}>
             <SidebarHeader>
                 <div className="flex items-center space-x-4 mr-2">

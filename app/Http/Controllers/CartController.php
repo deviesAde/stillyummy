@@ -10,4 +10,8 @@ class CartController extends Controller
     public function index(){
         return Inertia::render('User/Cart/cartPage');
     }
+
+    public function create(){
+        return redirect()->route('cart.index');
+    }
 }

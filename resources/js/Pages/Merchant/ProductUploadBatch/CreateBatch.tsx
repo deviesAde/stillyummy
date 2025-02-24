@@ -1,12 +1,13 @@
-import MerchantLayout from "../../../Layouts/Merchant/MerchantLayout"
+import MerchantLayout from "../../../Layouts/Merchant/MerchantLayout";
 import { Input } from "@/Components/ui/input";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useRef } from "react";
 import { Button } from "@/Components/ui/button";
 import Papa from "papaparse";
 import * as ExcelParser from "xlsx";
 import TableDemo from "@/Components/Product/TableBatchUpload";
 import { cn } from "@/lib/utils";
+import { router } from "@inertiajs/react";
 
 export type Header = {
     ProductName: string;
@@ -14,9 +15,13 @@ export type Header = {
     ProductStock: number;
     ProductDescription: string;
     ProductExpired: Date;
+    ProductImage?: string;
 };
 
 export default function CreateBatchPage() {
+    // #Todo
+    // Validasi isi data setelah reload/load data
+    // Tambah State validasi untuk contion submit button
     const HeaderProductName = useRef<HTMLInputElement>(null);
     const HeaderProductPrice = useRef<HTMLInputElement>(null);
     const HeaderProductDescription = useRef<HTMLInputElement>(null);
@@ -24,11 +29,83 @@ export default function CreateBatchPage() {
     const HeaderProductExpired = useRef<HTMLInputElement>(null);
     const [File, SetFile] = useState<File>();
     const [ReadedFile, SetReadedFile] = useState<Header[]>();
-    console.log(ReadedFile);
+    const [Image, setImage] = useState<{ url: string; index: number }[]>([]);
+    const [validate, setValidate] = useState<boolean>();
+
+    const handleChangeImage = useCallback((url: string, index: number) => {
+        setImage((prevImages) => {
+            const newImageArray = [...prevImages];
+            newImageArray[index] = { url, index }; // Update hanya indeks tertentu
+            return newImageArray;
+        });
+    }, []);
+
+    const handleUpload = () => {
+        const productsWithImages = ReadedFile?.map((product, index) => ({
+            ...product,
+            ProductImage: Image[index]?.url, // Menggabungkan URL gambar ke produk
+        }));
+        router.post(route("merchant.product.createbatchpost"), {
+            ProductList: productsWithImages,
+        });
+    };
+
+    const validateData = (data : Header[]) => {
+        // Cek setiap data baris apakah valid
+        for (const row of data) {
+            // Validasi Nama Produk
+            if (!row.ProductName) {
+                alert("Nama produk tidak boleh kosong.");
+                setValidate(false);
+                return false;
+            }
+
+            // Validasi Harga Produk (harus angka)
+            if (isNaN(row.ProductPrice) || row.ProductPrice <= 0) {
+                alert(
+                    "Harga produk tidak valid. Pastikan harga adalah angka positif."
+                );
+                setValidate(false);
+                return false;
+            }
+
+            // Validasi Stok Produk (harus angka)
+            if (isNaN(row.ProductStock) || row.ProductStock < 0) {
+                alert(
+                    "Stok produk tidak valid. Pastikan stok adalah angka yang tidak negatif."
+                );
+                setValidate(false);
+                return false;
+            }
+
+            // Validasi Tanggal Expired (harus valid)
+            if (isNaN(Date.parse(row.ProductExpired.toString()))) {
+                alert("Tanggal kedaluwarsa produk tidak valid.");
+                setValidate(false);
+                return false;
+            }
+
+            // Validasi Deskripsi Produk (boleh kosong, tapi lebih baik ada)
+            if (!row.ProductDescription) {
+                alert("Deskripsi produk tidak boleh kosong.");
+                setValidate(false);
+                return false;
+            }
+        }
+        setValidate(true);
+        return true; // Semua data valid
+    };
+
     const Reader = () => {
         if (!File) return;
-
-        // Check if file type is either CSV or Excel
+        if (
+            !HeaderProductDescription.current?.value ||
+            !HeaderProductName.current?.value ||
+            !HeaderProductPrice.current?.value ||
+            !HeaderProductStock.current?.value ||
+            !HeaderProductExpired.current?.value
+        )
+            return;
         if (
             ![
                 "text/csv",
@@ -44,16 +121,13 @@ export default function CreateBatchPage() {
                 File.type ===
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             ) {
-                // Use readAsArrayBuffer for binary files (Excel files)
                 const ParseResult = ExcelParser.read(e.target?.result, {
                     type: "array",
                 });
-                // Optional: Convert to JSON or do further processing here
                 const sheetName = ParseResult.SheetNames[0];
                 const data = ExcelParser.utils.sheet_to_json(
                     ParseResult.Sheets[sheetName]
                 );
-                console.log(data);
                 const resultvalidation: Header[] = data.map((item: any) => ({
                     ProductName:
                         item[HeaderProductName.current?.value as string],
@@ -69,10 +143,8 @@ export default function CreateBatchPage() {
                     ProductDescription:
                         item[HeaderProductDescription.current?.value as string],
                 }));
-                console.log(resultvalidation);
-                SetReadedFile(resultvalidation);
+                if(validateData(resultvalidation))SetReadedFile(resultvalidation);
             } else {
-                // For CSV files, use PapaParse to parse text data
                 Papa.parse(e.target?.result as string, {
                     header: true,
                     complete: (result) => {
@@ -108,14 +180,12 @@ export default function CreateBatchPage() {
                                 ),
                             })
                         );
-                        console.log(resultvalidation);
-                        SetReadedFile(resultvalidation);
+                        if(validateData(resultvalidation))SetReadedFile(resultvalidation);
                     },
                 });
             }
         };
 
-        // For Excel files, use readAsArrayBuffer; for CSV files, use readAsText
         if (
             File.type ===
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -158,12 +228,31 @@ export default function CreateBatchPage() {
                 onChange={(e) => SetFile(e.target.files?.[0])}
             />
             <div className="flex flex-row gap-x-1.5">
-                <Button onClick={Reader} className={cn("flex-1",ReadedFile && File && "bg-red-600 hover:bg-red-700")}>
+                <Button
+                    onClick={Reader}
+                    className={cn(
+                        "flex-1",
+                        ReadedFile && File && "bg-red-600 hover:bg-red-700"
+                    )}
+                >
                     {ReadedFile && File ? "Reload File" : "Load File"}
                 </Button>
-                {ReadedFile && File && <Button className="flex-1 bg-green-600 hover:bg-green-700">Submit</Button>}
+                {ReadedFile && File && (
+                    <Button
+                        className="flex-1 bg-green-600 hover:bg-green-700"
+                        onClick={handleUpload}
+                        disabled={!validate}
+                    >
+                        Submit
+                    </Button>
+                )}
             </div>
-            {ReadedFile && File && <TableDemo Data={ReadedFile} />}
+            {ReadedFile && File && (
+                <TableDemo
+                    Data={ReadedFile}
+                    handleChangeImage={handleChangeImage}
+                />
+            )}
         </MerchantLayout>
     );
 }

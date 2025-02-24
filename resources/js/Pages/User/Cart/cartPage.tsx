@@ -33,7 +33,6 @@ const CartItems = Array.from({ length: 5 }).map((item, index) => {
 
 export default function Cart() {
     const [cartItems, SetCartItems] = useState<CreateTransactionType>();
-    console.log();
     return (
         <Layout
             header={{ Parent: "Keranjang" }}
@@ -48,8 +47,8 @@ export default function Cart() {
                     <h1 className="flex-1">Aksi</h1>
                 </div>
             </Card>
-            {CartItems.map((item) => (
-                <CardCart Data={item} SetItem={SetCartItems} />
+            {CartItems.map((item,index) => (
+                <CardCart key={index} Data={item} SetItem={SetCartItems} />
             ))}
             <div className="rounded-lg fixed left-0 md:left-72 bottom-0 md:right-10 right-0 flex justify-between p-5 bg-white border-[0.5px] items-center">
                 <h1 className="text-xl font-bold">
@@ -58,7 +57,7 @@ export default function Cart() {
                         currency: "IDR",
                     }).format(cartItems?.Total ?? 0)}
                 </h1>
-                <Button disabled={!cartItems} onClick={()=>cartItems && MakeTransactionPage(cartItems)}>Bayar Sekarang</Button>
+                <Button disabled={!cartItems} onClick={() => cartItems && MakeTransactionPage(cartItems)}>Bayar Sekarang</Button>
             </div>
         </Layout>
     );

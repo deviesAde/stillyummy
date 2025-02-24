@@ -9,7 +9,7 @@ import { Button } from "@/Components/ui/button";
 import ProductDescription from "@/Components/Product/ProductDescription";
 import StockCard from "@/Components/Product/StockCard";
 import { User } from "@/types";
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 
 export default function ProductPage() {
     faker.seed(1);
@@ -32,7 +32,11 @@ export default function ProductPage() {
         Stock: faker.number.int({ min: 0, max: 10 }),
     };
     const [Modal, SetModal] = useState(false);
-    const SessionInfo: User = usePage().props.auth.user;
+    const handleAddToCart = (amount: number) => {
+        router.post(route("cart.create"), {
+            product: { product_id: Product.ID, amout: amount },
+        });
+    };
     return (
         <div className="flex">
             <Layout
@@ -45,7 +49,10 @@ export default function ProductPage() {
                 </div>
 
                 <div className="md:w-1/3 hidden md:block">
-                    <StockCard Product={Product} />
+                    <StockCard
+                        handleAddToCart={handleAddToCart}
+                        Product={Product}
+                    />
                 </div>
                 {Product.Stock ? (
                     <ButtonFooter
@@ -64,7 +71,13 @@ export default function ProductPage() {
                     </div>
                 )}
             </Layout>
-            {Modal && <ProductModal Data={Product} onClick={SetModal} />}
+            {Modal && (
+                <ProductModal
+                    handleAddToCart={handleAddToCart}
+                    Data={Product}
+                    onClick={SetModal}
+                />
+            )}
         </div>
     );
 }

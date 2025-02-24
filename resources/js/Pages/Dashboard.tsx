@@ -70,38 +70,10 @@ export default function Page() {
             <div className="sticky top-14 pb-5 flex flex-col gap-y-5 bg-white z-50">
                 <TextInput
                     placeholder="Search"
-                    onKeyDown={(e) =>
+                    onKeyDown={(e:any) =>
                         e.keyCode === 13 && HandleSearch(e.target.value)
                     }
                 />
-                {/* <div className="flex space-x-1 w-1/2 ml-auto">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="border-[1px] rounded-md flex-1">
-                            Open
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Billing</DropdownMenuItem>
-                            <DropdownMenuItem>Team</DropdownMenuItem>
-                            <DropdownMenuItem>Subscription</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="border-[1px] rounded-md flex-1 py-0.5">
-                            Open
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Billing</DropdownMenuItem>
-                            <DropdownMenuItem>Team</DropdownMenuItem>
-                            <DropdownMenuItem>Subscription</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div> */}
             </div>
 
             <div className="grid grid-col-2 md:grid-cols-6 gap-7 md:gap-2">

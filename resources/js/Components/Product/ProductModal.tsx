@@ -15,9 +15,11 @@ import MakeTransactionPage from "@/services/MakeTransactionPage";
 export default function ProductModal({
     onClick,
     Data,
+    handleAddToCart,
 }: {
     onClick: (state: boolean) => void;
     Data: ProductCardType;
+    handleAddToCart : (params : number) => void;
 }) {
     const [PurchaseAmount, SetPurchaseAmount] = useState<number>(1);
     const [SubTotal, SetSubTotal] = useState<number>(Data.price);
@@ -82,7 +84,7 @@ export default function ProductModal({
                 <CardFooter className="space-x-5 border-t-2 pt-5">
                     <ButtonFooter
                         className="flex w-full gap-x-5"
-                        Action1={() => {}}
+                        Action1={() => handleAddToCart(PurchaseAmount)}
                         Action2={() =>
                             MakeTransactionPage({
                                 Total: SubTotal,
@@ -93,7 +95,6 @@ export default function ProductModal({
                                         name: Data.Title,
                                         price: Data.price,
                                         ProductStock: Data.Stock as number,
-                                        price: Data.price,
                                         ProductSubtotal: SubTotal,
                                         quantity: PurchaseAmount,
                                         ProductPhoto: Data.Thubnail as string,

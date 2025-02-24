@@ -41,9 +41,14 @@ class ProductController extends Controller
         return Inertia::render('Merchant/ProductUploadBatch/CreateBatch');
     }
 
+    public function createBatchPost(Request $request){
+        $productList = $request->input('ProductList');
+        dd($productList);
+    }
+
     public function store(Request $request)
     {
-        $hasil = $request->validate([
+        $request->validate([
             'ProductName' => 'required',
             'ProductPrice' => 'required|numeric|min:1',
             'ProductStock' => 'required|numeric|min:1',

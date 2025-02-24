@@ -11,6 +11,7 @@ Route::prefix('merchant')->group(function () {
     Route::prefix('product')->group(function () {
         Route::get('/create', [ProductController::class, 'create'])->name('merchant.product.create');
         Route::get('/createbatch', [ProductController::class, 'createbatch'])->name('merchant.product.createbatch');
+        Route::post('/createbatch', [ProductController::class, 'createBatchPost'])->name('merchant.product.createbatchpost');
     });
     Route::get('/', [MerchantController::class, 'index'])->name('merchant.index');
     Route::get('/products', [MerchantController::class, 'index_products'])->name('merchant.products');

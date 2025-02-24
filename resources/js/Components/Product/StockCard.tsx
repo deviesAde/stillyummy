@@ -11,7 +11,13 @@ import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import MakeTransactionPage from "@/services/MakeTransactionPage";
 
-export default function StockCard({ Product }: { Product: ProductCardType }) {
+export default function StockCard({
+    Product,
+    handleAddToCart,
+}: {
+    Product: ProductCardType;
+    handleAddToCart: (params: number) => void;
+}) {
     const [PurchaseAmount, SetPurchaseAmount] = useState<number>(
         Product.Stock ? 1 : 0
     );
@@ -59,7 +65,7 @@ export default function StockCard({ Product }: { Product: ProductCardType }) {
                     </div>
                     <h1>Stock : {Product.Stock}</h1>
                 </div>
-                <Button disabled={Product.Stock! < 1}>
+                <Button disabled={Product.Stock! < 1} onClick={() => handleAddToCart(PurchaseAmount)}>
                     Tambahkan Ke keranjang
                 </Button>
                 <Button
@@ -74,12 +80,13 @@ export default function StockCard({ Product }: { Product: ProductCardType }) {
                                     name: Product.Title,
                                     price: Product.price,
                                     ProductStock: Product.Stock as number,
-                                    price: Product.price,
-                                    ProductSubtotal : SubTotal,
-                                    quantity : PurchaseAmount,
-                                    ProductPhoto : Product.Thubnail as string
+                                    ProductSubtotal: SubTotal,
+                                    quantity: PurchaseAmount,
+                                    ProductPhoto: Product.Thubnail as string,
+                                    ProductExpired: Product.ProductExpired,
                                 },
                             ],
+                            MerchantName: Product.Seller as string,
                         })
                     }
                 >

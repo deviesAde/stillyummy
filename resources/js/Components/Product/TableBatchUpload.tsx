@@ -8,11 +8,10 @@ import {
     TableRow,
 } from "../ui/table";
 
-import { Header } from "@/Pages/Product/CreateBatch";
+import { Header } from "@/Pages/Merchant/ProductUploadBatch/CreateBatch";
 import BingImage from "./BingImage";
 
-export default function TableDemo({Data} : {Data:Header[]}) {
-    console.log(Data);
+export default function TableDemo({Data,handleChangeImage} : {Data:Header[],handleChangeImage : (url:string,index:number) =>void}) {
     return (
         <Table className="shadow-sm">
             <TableCaption>List Batch Product</TableCaption>
@@ -37,7 +36,7 @@ export default function TableDemo({Data} : {Data:Header[]}) {
                             {invoice.ProductName}
                         </TableCell>
                         <TableCell className="w-fit">
-                            <BingImage keyword = {invoice.ProductName}/>
+                            <BingImage changeImage = {(url : string) => handleChangeImage(url,index)} keyword = {invoice.ProductName}/>
                         </TableCell>
                         <TableCell>{new Intl.NumberFormat('id-ID',{currency:'IDR', style: 'currency'}).format(invoice.ProductPrice)}</TableCell>
                         <TableCell className="text-center">{invoice.ProductStock}</TableCell>

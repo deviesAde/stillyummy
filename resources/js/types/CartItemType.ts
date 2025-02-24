@@ -6,6 +6,7 @@ export interface MerchantProductCartType {
     ProductPhoto: string,
     quantity: number
     ProductSubtotal?: number
+    ProductExpired : Date
 
 }
 
